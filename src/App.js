@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Navigation from "./Components/Navigation";
 import "antd/dist/antd.css";
 import "./App.css";
@@ -19,10 +19,10 @@ function App() {
       />
       <Switch>
         <Route path="/compare">
-          <Compare />
+          <Compare currentCountry={currentCountry} />
         </Route>
         <Route path="/">
-          <Home />
+          <Home currentCountry={currentCountry} />
         </Route>
       </Switch>
     </Router>

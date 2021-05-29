@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Select, Typography } from "antd";
+import { Select, Typography } from "antd";
 import { getAllCountryName } from "../Utils";
 import data from "../Data/countries.json";
 import styled from "styled-components";
