@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Typography, Radio, Slider, Button } from "antd";
 import {
   XYPlot,
@@ -20,7 +20,7 @@ const LineChart = ({ data, title }) => {
   const [mode, setMode] = useState("daily");
   const [hintValue, setHintValue] = useState(null);
   const [xDomain, setXDomain] = useState(null);
-  const onChangeHandler = (e) => {
+  const changeMode = (e) => {
     setMode(e.target.value);
   };
   const options = [
@@ -43,32 +43,26 @@ const LineChart = ({ data, title }) => {
   };
 
   const onBrushHandler = (area) => {
-    console.log(area);
-    if (area) {
-      area.left.setHours(8, 0, 0, 0);
-      area.right.setHours(8, 0, 0, 0);
-      const dates = sourceData.daily.map((d) => d.x);
-      const startIndex = dates.findIndex(
-        (x) => x.getTime() === area.left.getTime()
-      );
-      const endIndex = dates.findIndex(
-        (x) => x.getTime() === area.right.getTime()
-      );
-      const sliderLeftValue = Math.floor((startIndex / dates.length) * 100);
-      const sliderRightValue = Math.floor((endIndex / dates.length) * 100);
-      const newRenderData = { ...sourceData };
-      newRenderData.daily = [...newRenderData.daily].splice(
-        startIndex,
-        endIndex
-      );
-      newRenderData.cumulative = [...newRenderData.daily].splice(
-        startIndex,
-        endIndex
-      );
-      setSliderValue([sliderLeftValue, sliderRightValue]);
-      setRenderData(newRenderData);
-      setXDomain(area);
-    }
+    area.left.setHours(8, 0, 0, 0);
+    area.right.setHours(8, 0, 0, 0);
+    const dates = sourceData.daily.map((d) => d.x);
+    const startIndex = dates.findIndex(
+      (x) => x.getTime() === area.left.getTime()
+    );
+    const endIndex = dates.findIndex(
+      (x) => x.getTime() === area.right.getTime()
+    );
+    const sliderLeftValue = Math.floor((startIndex / dates.length) * 100);
+    const sliderRightValue = Math.floor((endIndex / dates.length) * 100);
+    const newRenderData = { ...sourceData };
+    newRenderData.daily = [...newRenderData.daily].splice(startIndex, endIndex);
+    newRenderData.cumulative = [...newRenderData.cumulative].splice(
+      startIndex,
+      endIndex
+    );
+    setSliderValue([sliderLeftValue, sliderRightValue]);
+    setRenderData(newRenderData);
+    setXDomain(area);
   };
 
   const onSliderChange = (value) => {
@@ -76,11 +70,10 @@ const LineChart = ({ data, title }) => {
     const endIndex = Math.ceil((value[1] / 100) * sourceData[mode].length);
     const newRenderData = { ...sourceData };
     newRenderData.daily = [...newRenderData.daily].splice(startIndex, endIndex);
-    newRenderData.cumulative = [...newRenderData.daily].splice(
+    newRenderData.cumulative = [...newRenderData.cumulative].splice(
       startIndex,
       endIndex
     );
-
     const leftDomain = newRenderData.daily[0].x;
     const rightDomain = newRenderData.daily[newRenderData.daily.length - 1].x;
     const newXDomain = {
@@ -105,7 +98,7 @@ const LineChart = ({ data, title }) => {
           {title}
         </Typography.Title>
         <Radio.Group
-          onChange={onChangeHandler}
+          onChange={changeMode}
           value={mode}
           options={options}
           optionType="button"
@@ -166,7 +159,7 @@ const LineChart = ({ data, title }) => {
                       {`Date: ${formatDate(hintValue.x)}`}
                     </Typography.Paragraph>
                     <Typography.Paragraph>
-                      ${`Number: ${hintValue.y}`}
+                      {`Number: ${hintValue.y}`}
                     </Typography.Paragraph>
                   </Hint>
                 )}
