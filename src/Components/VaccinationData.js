@@ -12,7 +12,7 @@ const VaccinationData = ({ vaccinationData }) => {
 
   return (
     <>
-      <Typography.Title>Vaccination Progress</Typography.Title>
+      <Typography.Title level={3}>Vaccination Progress</Typography.Title>
       <div style={{ padding: "100px" }}>
         <div style={{ display: "flex", justifyContent: "space-around" }}>
           <Typography.Paragraph>{`People fully vaccinated: ${numberWithCommas(

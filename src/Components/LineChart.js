@@ -43,26 +43,31 @@ const LineChart = ({ data, title }) => {
   };
 
   const onBrushHandler = (area) => {
-    area.left.setHours(8, 0, 0, 0);
-    area.right.setHours(8, 0, 0, 0);
-    const dates = sourceData.daily.map((d) => d.x);
-    const startIndex = dates.findIndex(
-      (x) => x.getTime() === area.left.getTime()
-    );
-    const endIndex = dates.findIndex(
-      (x) => x.getTime() === area.right.getTime()
-    );
-    const sliderLeftValue = Math.floor((startIndex / dates.length) * 100);
-    const sliderRightValue = Math.floor((endIndex / dates.length) * 100);
-    const newRenderData = { ...sourceData };
-    newRenderData.daily = [...newRenderData.daily].splice(startIndex, endIndex);
-    newRenderData.cumulative = [...newRenderData.cumulative].splice(
-      startIndex,
-      endIndex
-    );
-    setSliderValue([sliderLeftValue, sliderRightValue]);
-    setRenderData(newRenderData);
-    setXDomain(area);
+    if (area) {
+      area.left.setHours(8, 0, 0, 0);
+      area.right.setHours(8, 0, 0, 0);
+      const dates = sourceData.daily.map((d) => d.x);
+      const startIndex = dates.findIndex(
+        (x) => x.getTime() === area.left.getTime()
+      );
+      const endIndex = dates.findIndex(
+        (x) => x.getTime() === area.right.getTime()
+      );
+      const sliderLeftValue = Math.floor((startIndex / dates.length) * 100);
+      const sliderRightValue = Math.floor((endIndex / dates.length) * 100);
+      const newRenderData = { ...sourceData };
+      newRenderData.daily = [...newRenderData.daily].splice(
+        startIndex,
+        endIndex
+      );
+      newRenderData.cumulative = [...newRenderData.cumulative].splice(
+        startIndex,
+        endIndex
+      );
+      setSliderValue([sliderLeftValue, sliderRightValue]);
+      setRenderData(newRenderData);
+      setXDomain(area);
+    }
   };
 
   const onSliderChange = (value) => {
@@ -104,9 +109,6 @@ const LineChart = ({ data, title }) => {
           optionType="button"
           buttonStyle="solid"
         />
-        <Button onClick={resetPlot} style={{ marginLeft: "600px" }}>
-          Reset
-        </Button>
       </div>
       <div style={{ width: "100%", height: "300px", marginBottom: "50px" }}>
         <AutoSizer>
@@ -169,13 +171,32 @@ const LineChart = ({ data, title }) => {
                   onBrushEnd={onBrushHandler}
                 />
               </XYPlot>
-              <div style={{ width: width, padding: "0px 100px" }}>
-                <Slider
-                  range={{ draggableTrack: true }}
-                  defaultValue={[0, 100]}
-                  value={sliderValue}
-                  onChange={onSliderChange}
-                />
+              <div
+                style={{
+                  width: width,
+                  display: "flex",
+                }}
+              >
+                <Button
+                  onClick={resetPlot}
+                  style={{ display: "inline", margin: "0px 15px" }}
+                >
+                  Reset
+                </Button>
+                <div
+                  style={{
+                    display: "inline-block",
+                    width: "100%",
+                    paddingRight: "100px",
+                  }}
+                >
+                  <Slider
+                    range={{ draggableTrack: true }}
+                    defaultValue={[0, 100]}
+                    value={sliderValue}
+                    onChange={onSliderChange}
+                  />
+                </div>
               </div>
             </>
           )}
