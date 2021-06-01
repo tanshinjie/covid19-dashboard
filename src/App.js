@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Navigation from "./Components/Navigation";
 import "antd/dist/antd.css";
+import "../node_modules/react-vis/dist/style.css";
 import "./App.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./Pages/Home";

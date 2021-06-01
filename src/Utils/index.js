@@ -10,6 +10,54 @@ export function getISO(country) {
   return found.alpha3Code;
 }
 
-export function toCamel(obj) {
-  return _.mapKeys(obj, (v, k) => _.camelCase(k));
+export function keysToCamel(obj) {
+  if (isObject(obj)) {
+    const n = {};
+
+    Object.keys(obj).forEach((k) => {
+      n[toCamel(k)] = keysToCamel(obj[k]);
+    });
+
+    return n;
+  } else if (Array.isArray(obj)) {
+    return obj.map((i) => {
+      return keysToCamel(i);
+    });
+  }
+
+  return obj;
 }
+
+const toCamel = (str) => {
+  return str.replace(/([-_][a-z])/gi, ($1) => {
+    return $1.toUpperCase().replace("-", "").replace("_", "");
+  });
+};
+
+const isObject = function (obj) {
+  return (
+    obj === Object(obj) && !Array.isArray(obj) && typeof obj !== "function"
+  );
+};
+
+export const monthToString = (month) => monthToStringMap["short"][month];
+
+export const formatDate = (date) =>
+  `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
+
+const monthToStringMap = {
+  short: [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ],
+};

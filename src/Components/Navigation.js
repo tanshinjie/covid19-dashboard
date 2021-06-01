@@ -10,7 +10,6 @@ const countries = getAllCountryName(data);
 
 const Navigation = ({ currentCountry, changeCountry }) => {
   const onChangeCountry = (value) => {
-    console.log(value);
     changeCountry(value);
   };
 
@@ -28,7 +27,16 @@ const Navigation = ({ currentCountry, changeCountry }) => {
             <i>yet another</i>&nbsp;COVID-19 Dashboard for
           </TextButton>
         </Link>
-        <Select defaultValue={currentCountry} onChange={onChangeCountry}>
+        <Select
+          showSearch
+          style={{ width: 150 }}
+          optionFilterProp="children"
+          defaultValue={currentCountry}
+          onChange={onChangeCountry}
+          filterOption={(input, option) =>
+            option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+          }
+        >
           {options}
         </Select>
       </div>
@@ -53,4 +61,7 @@ const NavigationContainer = styled.nav`
 
 const TextButton = styled(Typography.Text)`
   padding: 1rem;
+  &:hover {
+    cursor: pointer;
+  }
 `;

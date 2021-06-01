@@ -7,14 +7,17 @@ const LatestData = ({ latestCovidData }) => {
   console.log(latestCovidData);
   return (
     <div>
-      <Typography.Title level={3}>
+      <Typography.Title
+        level={3}
+        style={{ display: "inline-block", marginRight: "1rem" }}
+      >
         Daily update
-        <Typography.Title
-          level={5}
-          style={{ display: "inline-block", marginLeft: "1rem" }}
-        >
-          {latestCovidData.lastUpdate}
-        </Typography.Title>
+      </Typography.Title>
+      <Typography.Title
+        level={5}
+        style={{ display: "inline-block", marginRight: "1rem" }}
+      >
+        {latestCovidData.lastUpdate}
       </Typography.Title>
       <MacroDataContainer>
         <MacroDataCard title={"Active Cases"}>
