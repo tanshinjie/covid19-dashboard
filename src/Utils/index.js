@@ -28,11 +28,9 @@ export function keysToCamel(obj) {
   return obj;
 }
 
-const toCamel = (str) => {
-  return str.replace(/([-_][a-z])/gi, ($1) => {
-    return $1.toUpperCase().replace("-", "").replace("_", "");
-  });
-};
+function toCamel(str) {
+  return _.camelCase(str);
+}
 
 const isObject = function (obj) {
   return (

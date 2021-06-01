@@ -15,19 +15,54 @@ const Home = ({ currentCountry }) => {
   const ISO = getISO(currentCountry);
 
   useEffect(() => {
-    setLatestCovidData(mockLastestData);
+    // fetch(
+    //   "https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/latest/owid-covid-latest.json"
+    // )
+    //   .then((response) => response.json())
+    //   .then((result) => {
+    //     console.log("covidData", keysToCamel(result[ISO]));
+    //     setVaccinationData(keysToCamel(result[ISO]));
+    //   })
+    //   .catch((err) => console.log(err));
+    // fetch(
+    //   "https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/owid-covid-data.json"
+    // )
+    //   .then((response) => response.json())
+    //   .then((result) => {
+    //     setCovidData(keysToCamel(result[ISO]));
+    //   })
+    //   .catch((err) => console.log(err));
+
+    // fetch(`https://covid-19-tracking.p.rapidapi.com/v1/${currentCountry}`, {
+    //   method: "GET",
+    //   headers: {
+    //     useQueryString: true,
+    //     "x-rapidapi-key": process.env.REACT_APP_X_RAPIDAPI_KEY,
+    //     "x-rapidapi-host":
+    //       process.env.REACT_APP_X_RAPIDAPI_HOST_COVID19_TRACKING,
+    //   },
+    // })
+    //   .then((response) => response.json())
+    //   .then((result) => {
+    //     setLatestCovidData(keysToCamel(result));
+    //   })
+    //   .catch((err) => {
+    //     console.error(err);
+    //   });
+
+    setLatestCovidData(keysToCamel(mockLastestData));
     setVaccinationData(keysToCamel(mockVaccinationData[ISO]));
     setCovidData(keysToCamel(mockPastData[ISO]));
   }, [ISO]);
 
-  return !latestCovidData && !covidData && !vaccinationData ? (
-    <div>Loading</div>
-  ) : (
+  return latestCovidData && covidData && vaccinationData ? (
     <>
       <LatestData latestCovidData={latestCovidData} />
       <PastData covidData={covidData} />
       <VaccinationData vaccinationData={vaccinationData} />
     </>
+  ) : (
+    <div>Loading</div>
   );
 };
 

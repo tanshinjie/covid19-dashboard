@@ -1,10 +1,10 @@
 {
-    "activeCasesText": "564",
-    "countryText": "Singapore",
-    "lastUpdate": "2021-05-29 11:53",
-    "newCasesText": "+33",
-    "newDeathsText": "",
-    "totalCasesText": "62,003",
-    "totalDeathsText": "32",
-    "totalRecoveredText": "61,407"
+    "Active Cases_text": "577",
+    "Country_text": "Singapore",
+    "Last Update": "2021-06-01 15:04",
+    "New Cases_text": "+18",
+    "New Deaths_text": "",
+    "Total Cases_text": "62,069",
+    "Total Deaths_text": "33",
+    "Total Recovered_text": "61,459"
 }
