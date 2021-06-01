@@ -166,7 +166,7 @@ const LineChart = ({ data, title }) => {
                       {`Date: ${formatDate(hintValue.x)}`}
                     </Typography.Paragraph>
                     <Typography.Paragraph>
-                      {`Cases: ${hintValue.y}`}
+                      ${`Number: ${hintValue.y}`}
                     </Typography.Paragraph>
                   </Hint>
                 )}
