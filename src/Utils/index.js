@@ -40,10 +40,13 @@ const isObject = function (obj) {
   );
 };
 
-export const monthToString = (month) => monthToStringMap["short"][month];
+export function monthToString(month) {
+  return monthToStringMap["short"][month];
+}
 
-export const formatDate = (date) =>
-  `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
+export function formatDate(date) {
+  return `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
+}
 
 const monthToStringMap = {
   short: [
@@ -61,3 +64,7 @@ const monthToStringMap = {
     "Dec",
   ],
 };
+
+export function numberWithCommas(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}

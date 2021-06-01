@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Typography, Radio, Slider, Button } from "antd";
 import {
   XYPlot,

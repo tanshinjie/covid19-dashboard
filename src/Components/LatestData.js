@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { Typography } from "antd";
 
 const LatestData = ({ latestCovidData }) => {
-  console.log(latestCovidData);
   return (
     <div>
       <Typography.Title
