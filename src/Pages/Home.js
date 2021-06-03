@@ -23,8 +23,8 @@ const Home = ({ currentCountry }) => {
 
   const ISO = getISO(currentCountry);
 
-  const openViewSettings = () => {
-    setShouldOpenViewSettings(true);
+  const toggleViewSettings = () => {
+    setShouldOpenViewSettings(!shouldOpenViewSettings);
   };
   const closeViewSettings = () => {
     setShouldOpenViewSettings(false);
@@ -77,7 +77,7 @@ const Home = ({ currentCountry }) => {
 
   return latestCovidData && covidData && vaccinationData ? (
     <>
-      <Button onClick={openViewSettings}>Customize View</Button>
+      <Button onClick={toggleViewSettings}>Customize View</Button>
       {shouldOpenViewSettings && (
         <ViewSettings
           closeViewSettings={closeViewSettings}
