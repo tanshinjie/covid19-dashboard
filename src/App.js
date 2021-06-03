@@ -9,15 +9,18 @@ import Compare from "./Pages/Compare";
 
 function App() {
   const [currentCountry, setCurrentCountry] = useState("Singapore");
+
   const changeCountry = (country) => {
     setCurrentCountry(country);
   };
+
   return (
     <Router>
       <Navigation
         currentCountry={currentCountry}
         changeCountry={changeCountry}
       />
+
       <Switch>
         <Route path="/compare">
           <Compare currentCountry={currentCountry} />

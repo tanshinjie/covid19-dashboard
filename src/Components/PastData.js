@@ -3,7 +3,7 @@ import React from "react";
 import LineChart from "./LineChart";
 import _ from "lodash";
 
-const PastData = ({ covidData }) => {
+const PastData = ({ covidData, showTotalCases, showTotalDeath }) => {
   const data = covidData.data;
 
   const newCasesDirty = _.map(data, (obj) => _.pick(obj, ["date", "newCases"]));
@@ -49,8 +49,10 @@ const PastData = ({ covidData }) => {
   return (
     <>
       <Typography.Title level={3}>
-        <LineChart data={caseData} title={"Total Cases"} />
-        <LineChart data={deathData} title={"Total Deaths"} />
+        {showTotalCases && <LineChart data={caseData} title={"Total Cases"} />}
+        {showTotalDeath && (
+          <LineChart data={deathData} title={"Total Deaths"} />
+        )}
       </Typography.Title>
     </>
   );

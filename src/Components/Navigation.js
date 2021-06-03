@@ -12,7 +12,6 @@ const Navigation = ({ currentCountry, changeCountry }) => {
   const onChangeCountry = (value) => {
     changeCountry(value);
   };
-
   const options = countries.map((c) => (
     <Option key={c} value={c}>
       {c}
@@ -44,7 +43,6 @@ const Navigation = ({ currentCountry, changeCountry }) => {
         <Link to="/compare">
           <TextButton>Compare</TextButton>
         </Link>
-        <TextButton>Customize Data</TextButton>
       </div>
     </NavigationContainer>
   );

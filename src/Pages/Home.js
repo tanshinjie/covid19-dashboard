@@ -6,13 +6,33 @@ import mockLastestData from "../Data/latest-covid19-tracking.json";
 import mockPastData from "../Data/owid-covid-data.json";
 import mockVaccinationData from "../Data/latest.json";
 import VaccinationData from "../Components/VaccinationData";
+import { Button } from "antd";
+import ViewSettings from "../Components/ViewSettings";
 
 const Home = ({ currentCountry }) => {
   const [covidData, setCovidData] = useState(null);
   const [vaccinationData, setVaccinationData] = useState(null);
   const [latestCovidData, setLatestCovidData] = useState(null);
+  const [viewConfig, setViewConfig] = useState({
+    showLatestData: true,
+    showTotalCases: true,
+    showTotalDeath: true,
+    showVaccinationProgress: true,
+  });
+  const [shouldOpenViewSettings, setShouldOpenViewSettings] = useState(false);
 
   const ISO = getISO(currentCountry);
+
+  const openViewSettings = () => {
+    setShouldOpenViewSettings(true);
+  };
+  const closeViewSettings = () => {
+    setShouldOpenViewSettings(false);
+  };
+
+  const updateViewConfig = (value) => {
+    setViewConfig(value);
+  };
 
   useEffect(() => {
     // fetch(
@@ -53,16 +73,34 @@ const Home = ({ currentCountry }) => {
     setLatestCovidData(keysToCamel(mockLastestData));
     setVaccinationData(keysToCamel(mockVaccinationData[ISO]));
     setCovidData(keysToCamel(mockPastData[ISO]));
-  }, [ISO]);
+  }, [ISO, viewConfig]);
 
   return latestCovidData && covidData && vaccinationData ? (
     <>
-      <LatestData latestCovidData={latestCovidData} />
-      <PastData covidData={covidData} />
-      <VaccinationData vaccinationData={vaccinationData} />
+      <Button onClick={openViewSettings}>Customize View</Button>
+      {shouldOpenViewSettings && (
+        <ViewSettings
+          closeViewSettings={closeViewSettings}
+          updateViewConfig={updateViewConfig}
+          viewConfig={viewConfig}
+        />
+      )}
+      {viewConfig.showLatestData && (
+        <LatestData latestCovidData={latestCovidData} />
+      )}
+      <PastData
+        covidData={covidData}
+        showTotalCases={viewConfig.showTotalCases}
+        showTotalDeath={viewConfig.showTotalDeath}
+      />
+      {viewConfig.showVaccinationProgress && (
+        <VaccinationData vaccinationData={vaccinationData} />
+      )}
     </>
   ) : (
-    <div>Loading</div>
+    <>
+      <div>Loading</div>
+    </>
   );
 };
 
