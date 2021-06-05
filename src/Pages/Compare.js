@@ -1,94 +1,109 @@
-import React, { useState } from "react";
-import { Table, Tag, Space } from "antd";
+import React, { useState, useEffect } from "react";
+import { Table, Select } from "antd";
+import worldStats from "../Data/world-stats.json";
+import {
+  keysToCamel,
+  getAllCountryNameByKey,
+  numberWithCommas,
+} from "../Utils";
+import _ from "lodash";
+import "../App.css";
+import { columns } from "../config";
+
+const { Option } = Select;
 
 const Compare = ({ currentCountry }) => {
-  const [host, setHost] = useState(currentCountry);
+  const [host, setHost] = useState(null);
   const [guests, setGuests] = useState([]);
+  const [tableData, setTableData] = useState([]);
+  const [shouldUpdate, setShouldUpdate] = useState(false);
+  const allData = keysToCamel(worldStats);
 
-  const data = [];
+  const countries = [
+    ...getAllCountryNameByKey(worldStats, "Country").slice(
+      2,
+      worldStats.length - 1
+    ),
+  ].sort();
 
-  const columns = [
-    {
-      title: "Country",
-      dataIndex: "country",
-      key: "country",
-    },
-    {
-      title: "Population",
-      dataIndex: "population",
-      key: "population",
-    },
-    {
-      title: "Total Test",
-      dataIndex: "totalTest",
-      key: "totalTest",
-    },
-    {
-      title: "Infection Risk",
-      dataIndex: "infectionRisk",
-      key: "infectionRisk",
-    },
-    {
-      title: "Case Fatality Rate",
-      dataIndex: "caseFatalityRate",
-      key: "caseFatalityRate",
-    },
-    {
-      title: "Test Percentage",
-      dataIndex: "testPercentage",
-      key: "testPercentage",
-    },
-    {
-      title: "Recovery Proportion",
-      dataIndex: "recoveryProportion",
-      key: "recoveryProportion",
-    },
-    {
-      title: "Total Cases",
-      dataIndex: "totalCases",
-      key: "totalCases",
-    },
-    {
-      title: "Total Deaths",
-      dataIndex: "totalDeaths",
-      key: "totalDeaths",
-    },
-    {
-      title: "Total Recovered",
-      dataIndex: "totalRecovered",
-      key: "totalRecovered",
-    },
-    {
-      title: "One Case Every X Ppl",
-      dataIndex: "oneCaseEveryXPpl",
-      key: "oneCaseEveryXPpl",
-    },
-    {
-      title: "One Death Every X Ppl",
-      dataIndex: "oneDeathEveryXPpl",
-      key: "oneDeathEveryXPpl",
-    },
-    {
-      title: "Death 1M Pop",
-      dataIndex: "Death1MPop",
-      key: "Death1MPop",
-    },
-    {
-      title: "Test 1M Pop",
-      dataIndex: "Test1MPop",
-      key: "Test1MPop",
-    },
-    {
-      title: "Total Case 1M Pop",
-      dataIndex: "totalCase1MPop",
-      key: "totalCase1MPop",
-    },
-  ];
+  const options = countries.map((c) => (
+    <Option key={c} value={c} disabled={c === host}>
+      {c}
+    </Option>
+  ));
+  useEffect(() => {
+    if (host !== currentCountry) {
+      setHost(currentCountry);
+      setShouldUpdate(true);
+    }
+  }, [host, currentCountry]);
+
+  useEffect(() => {
+    if (shouldUpdate) {
+      const hostData = allData.find((d) => d.country === host);
+      const hostReformatData = _.assign(
+        _.pick(hostData, [...columns.map((c) => c.key)])
+      );
+      for (const key in hostReformatData) {
+        if (key !== "country") {
+          hostReformatData[key] = numberWithCommas(
+            parseInt(hostReformatData[key])
+          );
+        }
+      }
+
+      const newGuestsReformatData = [];
+
+      for (let i = 0; i < guests.length; i++) {
+        const country = guests[i];
+        const guestData = allData.find((d) => d.country === country);
+
+        const dataReformat = _.assign(
+          _.pick(guestData, [...columns.map((c) => c.key)]),
+          {
+            key: guestData.threeLetterSymbol,
+          }
+        );
+        for (const key in dataReformat) {
+          if (key !== "country") {
+            dataReformat[key] = numberWithCommas(parseInt(dataReformat[key]));
+          }
+        }
+
+        newGuestsReformatData.push(dataReformat);
+      }
+      const newTableData = [hostReformatData, ...newGuestsReformatData];
+      setShouldUpdate(false);
+      setTableData(newTableData);
+    }
+  }, [shouldUpdate, host, guests, allData]);
+
+  const handleChange = (value) => {
+    setGuests([...value]);
+    setShouldUpdate(true);
+  };
 
   return (
     <div>
-      <p>API Source = VACCOVID - coronavirus, vaccine and treatment tracker</p>
-      <Table columns={columns} dataSource={data} pagination={false} />
+      <p>Data Source = VACCOVID - coronavirus, vaccine and treatment tracker</p>
+      <p>Compare with: </p>
+      <Select
+        mode="multiple"
+        style={{ width: "100%" }}
+        placeholder="select one or more countries to compare with"
+        onChange={handleChange}
+        optionLabelProp="label"
+      >
+        {options}
+      </Select>
+      <Table
+        columns={columns}
+        dataSource={tableData}
+        pagination={false}
+        rowClassName={(record) =>
+          record.country === host ? "host-row" : "guest-row"
+        }
+      />
     </div>
   );
 };

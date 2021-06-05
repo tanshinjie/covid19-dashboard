@@ -1,4 +1,77 @@
-const ONE_MAP_ACCESS_TOKEN =
-  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjc1OTMsInVzZXJfaWQiOjc1OTMsImVtYWlsIjoic2hpbmppZS53b3JrQGdtYWlsLmNvbSIsImZvcmV2ZXIiOmZhbHNlLCJpc3MiOiJodHRwOlwvXC9vbTIuZGZlLm9uZW1hcC5zZ1wvYXBpXC92MlwvdXNlclwvc2Vzc2lvbiIsImlhdCI6MTYyMjI2MDQwNiwiZXhwIjoxNjIyNjkyNDA2LCJuYmYiOjE2MjIyNjA0MDYsImp0aSI6IjcwYjg3M2Q2NjlkNmZiMWZkNTVlYzIxNGM4NTkyOTdlIn0._PHvBzWMAhUPyLPRZaMpSfrOeLm8g6QyUBthR8EDaPc";
-
-const NEWS_API_KEY = "97d121c4d82f4351a065e05c73ddece9";
+export const columns = [
+  {
+    title: "Country",
+    dataIndex: "country",
+    key: "country",
+  },
+  {
+    title: "Population",
+    dataIndex: "population",
+    key: "population",
+  },
+  {
+    title: "Total Tests",
+    dataIndex: "totalTests",
+    key: "totalTests",
+  },
+  {
+    title: "Infection Risk",
+    dataIndex: "infectionRisk",
+    key: "infectionRisk",
+  },
+  {
+    title: "Case Fatality Rate",
+    dataIndex: "caseFatalityRate",
+    key: "caseFatalityRate",
+  },
+  {
+    title: "Test Percentage",
+    dataIndex: "testPercentage",
+    key: "testPercentage",
+  },
+  {
+    title: "Recovery Proportion",
+    dataIndex: "recoveryProporation",
+    key: "recoveryProporation",
+  },
+  {
+    title: "Total Cases",
+    dataIndex: "totalCases",
+    key: "totalCases",
+  },
+  {
+    title: "Total Deaths",
+    dataIndex: "totalDeaths",
+    key: "totalDeaths",
+  },
+  {
+    title: "Total Recovered",
+    dataIndex: "totalRecovered",
+    key: "totalRecovered",
+  },
+  {
+    title: "One Case Every X Ppl",
+    dataIndex: "oneCaseeveryXPpl",
+    key: "oneCaseeveryXPpl",
+  },
+  {
+    title: "One Death Every X Ppl",
+    dataIndex: "oneDeatheveryXPpl",
+    key: "oneDeatheveryXPpl",
+  },
+  {
+    title: "Deaths 1M Pop",
+    dataIndex: "deaths1MPop",
+    key: "deaths1MPop",
+  },
+  {
+    title: "Tests 1M Pop",
+    dataIndex: "tests1MPop",
+    key: "tests1MPop",
+  },
+  {
+    title: "Total Cases 1M Pop",
+    dataIndex: "totCases1MPop",
+    key: "totCases1MPop",
+  },
+];

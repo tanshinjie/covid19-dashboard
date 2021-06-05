@@ -1,8 +1,8 @@
 import _ from "lodash";
 import countries from "../Data/countries.json";
 
-export function getAllCountryName() {
-  return _.map(countries, "name");
+export function getAllCountryNameByKey(dataSource, key) {
+  return _.map(dataSource, key);
 }
 
 export function getISO(country) {

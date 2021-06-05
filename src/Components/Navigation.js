@@ -1,12 +1,12 @@
 import React from "react";
 import { Select, Typography } from "antd";
-import { getAllCountryName } from "../Utils";
+import { getAllCountryNameByKey } from "../Utils";
 import data from "../Data/countries.json";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 const { Option } = Select;
 
-const countries = getAllCountryName(data);
+const countries = getAllCountryNameByKey(data, "name");
 
 const Navigation = ({ currentCountry, changeCountry }) => {
   const onChangeCountry = (value) => {
@@ -22,9 +22,7 @@ const Navigation = ({ currentCountry, changeCountry }) => {
     <NavigationContainer>
       <div>
         <Link to="/">
-          <TextButton>
-            <i>yet another</i>&nbsp;COVID-19 Dashboard for
-          </TextButton>
+          <TextButton>COVID-19 Dashboard for</TextButton>
         </Link>
         <Select
           showSearch
