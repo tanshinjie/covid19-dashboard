@@ -32,6 +32,7 @@ const Compare = ({ currentCountry }) => {
     </Option>
   ));
   useEffect(() => {
+    console.log("useEffect host !== currentCountry", host !== currentCountry);
     if (host !== currentCountry) {
       setHost(currentCountry);
       setShouldUpdate(true);
@@ -39,6 +40,7 @@ const Compare = ({ currentCountry }) => {
   }, [host, currentCountry]);
 
   useEffect(() => {
+    console.log("useEffect shouldUpdate", shouldUpdate);
     if (shouldUpdate) {
       const hostData = allData.find((d) => d.country === host);
       const hostReformatData = _.assign(
@@ -97,12 +99,14 @@ const Compare = ({ currentCountry }) => {
         {options}
       </Select>
       <Table
+        bordered={true}
         columns={columns}
         dataSource={tableData}
         pagination={false}
         rowClassName={(record) =>
           record.country === host ? "host-row" : "guest-row"
         }
+        rowKey={(record) => record.country}
       />
     </div>
   );
