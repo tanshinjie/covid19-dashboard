@@ -1,32 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { Table, Select } from "antd";
-import worldStats from "../Data/world-stats.json";
-import {
-  keysToCamel,
-  getAllCountryNameByKey,
-  numberWithCommas,
-} from "../Utils";
+import { numberWithCommas } from "../Utils";
 import _ from "lodash";
 import "../App.css";
 import { columns } from "../config";
 
 const { Option } = Select;
 
-const Compare = ({ currentCountry }) => {
+const Compare = ({ currentCountry, statsData, countryList }) => {
   const [host, setHost] = useState(null);
   const [guests, setGuests] = useState([]);
   const [tableData, setTableData] = useState([]);
   const [shouldUpdate, setShouldUpdate] = useState(false);
-  const allData = keysToCamel(worldStats);
 
-  const countries = [
-    ...getAllCountryNameByKey(worldStats, "Country").slice(
-      2,
-      worldStats.length - 1
-    ),
-  ].sort();
-
-  const options = countries.map((c) => (
+  const options = countryList.map((c) => (
     <Option key={c} value={c} disabled={c === host}>
       {c}
     </Option>
@@ -37,15 +24,16 @@ const Compare = ({ currentCountry }) => {
       setHost(currentCountry);
       setShouldUpdate(true);
     }
-  }, [host, currentCountry]);
+  }, [host, guests, currentCountry]);
 
   useEffect(() => {
     console.log("useEffect shouldUpdate", shouldUpdate);
     if (shouldUpdate) {
-      const hostData = allData.find((d) => d.country === host);
+      const hostData = statsData[host];
       const hostReformatData = _.assign(
         _.pick(hostData, [...columns.map((c) => c.key)])
       );
+      console.log(hostReformatData);
       for (const key in hostReformatData) {
         if (key !== "country") {
           hostReformatData[key] = numberWithCommas(
@@ -58,7 +46,7 @@ const Compare = ({ currentCountry }) => {
 
       for (let i = 0; i < guests.length; i++) {
         const country = guests[i];
-        const guestData = allData.find((d) => d.country === country);
+        const guestData = statsData[country];
 
         const dataReformat = _.assign(
           _.pick(guestData, [...columns.map((c) => c.key)]),
@@ -78,7 +66,7 @@ const Compare = ({ currentCountry }) => {
       setShouldUpdate(false);
       setTableData(newTableData);
     }
-  }, [shouldUpdate, host, guests, allData]);
+  }, [shouldUpdate, host, guests, statsData]);
 
   const handleChange = (value) => {
     setGuests([...value]);

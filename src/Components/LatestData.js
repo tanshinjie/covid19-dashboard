@@ -3,7 +3,8 @@ import MacroDataCard from "./MacroDataCard";
 import styled from "styled-components";
 import { Typography } from "antd";
 
-const LatestData = ({ latestCovidData }) => {
+const LatestData = ({ latestCovidData, statsDataSrc }) => {
+  console.log("LatestData", statsDataSrc);
   return (
     <div>
       <Typography.Title
@@ -16,24 +17,20 @@ const LatestData = ({ latestCovidData }) => {
         level={5}
         style={{ display: "inline-block", marginRight: "1rem" }}
       >
-        {latestCovidData.lastUpdate}
+        {latestCovidData.lastUpdatedDate}
       </Typography.Title>
       <MacroDataContainer>
         <MacroDataCard title={"Active Cases"}>
-          {!latestCovidData.activeCasesText
-            ? 0
-            : latestCovidData.activeCasesText}
+          {statsDataSrc.activeCases}
         </MacroDataCard>
         <MacroDataCard title={"New Cases"}>
-          {!latestCovidData.newCasesText ? 0 : latestCovidData.newCasesText}
+          {statsDataSrc.newCases}
         </MacroDataCard>
         <MacroDataCard title={"New Deaths"}>
-          {!latestCovidData.newDeathsText ? 0 : latestCovidData.newDeathsText}
+          {statsDataSrc.newDeaths}
         </MacroDataCard>
         <MacroDataCard title={"New Recovered"}>
-          {latestCovidData.totalRecoveredText
-            ? 0
-            : latestCovidData.totalRecoveredText}
+          {statsDataSrc.newRecovered}
         </MacroDataCard>
       </MacroDataContainer>
     </div>
