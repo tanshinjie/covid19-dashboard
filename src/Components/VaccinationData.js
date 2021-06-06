@@ -1,6 +1,9 @@
 import React from "react";
 import { Progress, Tooltip, Typography } from "antd";
 import { numberWithCommas } from "../Utils";
+import styled from "styled-components";
+import { ContentContainer } from "./Styles";
+const { Title, Paragraph } = Typography;
 
 const VaccinationData = ({ vaccinationData }) => {
   const peopleVaccinated = vaccinationData.peopleVaccinated
@@ -20,37 +23,40 @@ const VaccinationData = ({ vaccinationData }) => {
   );
 
   return (
-    <>
-      <Typography.Title level={3}>Vaccination Progress</Typography.Title>
-      <div style={{ padding: "100px" }}>
-        <div style={{ display: "flex", justifyContent: "space-around" }}>
-          <Typography.Paragraph>{`People fully vaccinated: ${numberWithCommas(
-            peopleFullyVaccinated
-          )} (${fullyVaccinatedOverPopulation}%)`}</Typography.Paragraph>
-          <Typography.Paragraph>{`People vaccinated: ${numberWithCommas(
-            peopleVaccinated
-          )} (${vaccinatedOverPopulation}%)`}</Typography.Paragraph>
-          <Typography.Paragraph>{`Population: ${numberWithCommas(
-            population
-          )}`}</Typography.Paragraph>
-        </div>
-        <Tooltip
-          title={`People fully vaccinated: ${numberWithCommas(
-            peopleFullyVaccinated
-          )} People vaccinated: ${numberWithCommas(
-            peopleVaccinated
-          )} Population: ${numberWithCommas(population)}`}
-        >
-          <Progress
-            percent={vaccinatedOverPopulation}
-            success={{
-              percent: fullyVaccinatedOverPopulation,
-            }}
-          />
-        </Tooltip>
-      </div>
-    </>
+    <ContentContainer marginTop={"5rem"}>
+      <Title level={4}>Vaccination Progress</Title>
+      <FlexSpaceAround>
+        <Paragraph strong>{`People fully vaccinated: ${numberWithCommas(
+          peopleFullyVaccinated
+        )} (${fullyVaccinatedOverPopulation}%)`}</Paragraph>
+        <Paragraph strong>{`People vaccinated: ${numberWithCommas(
+          peopleVaccinated
+        )} (${vaccinatedOverPopulation}%)`}</Paragraph>
+        <Paragraph strong>{`Population: ${numberWithCommas(
+          population
+        )}`}</Paragraph>
+      </FlexSpaceAround>
+      <Tooltip
+        title={`People fully vaccinated: ${numberWithCommas(
+          peopleFullyVaccinated
+        )} People vaccinated: ${numberWithCommas(
+          peopleVaccinated
+        )} Population: ${numberWithCommas(population)}`}
+      >
+        <Progress
+          percent={vaccinatedOverPopulation}
+          success={{
+            percent: fullyVaccinatedOverPopulation,
+          }}
+        />
+      </Tooltip>
+    </ContentContainer>
   );
 };
 
 export default VaccinationData;
+
+const FlexSpaceAround = styled.div`
+  display: flex;
+  justify-content: space-around;
+`;

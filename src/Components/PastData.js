@@ -1,7 +1,7 @@
-import { Typography } from "antd";
 import React from "react";
 import LineChart from "./LineChart";
 import _ from "lodash";
+import { ContentContainer } from "./Styles";
 
 const PastData = ({ covidData, showTotalCases, showTotalDeath }) => {
   const data = covidData.data;
@@ -47,10 +47,10 @@ const PastData = ({ covidData, showTotalCases, showTotalDeath }) => {
   const caseData = { daily: newCases, cumulative: totalCases };
   const deathData = { daily: newDeaths, cumulative: totalDeaths };
   return (
-    <Typography.Title level={3}>
+    <ContentContainer>
       {showTotalCases && <LineChart data={caseData} title={"Total Cases"} />}
       {showTotalDeath && <LineChart data={deathData} title={"Total Deaths"} />}
-    </Typography.Title>
+    </ContentContainer>
   );
 };
 

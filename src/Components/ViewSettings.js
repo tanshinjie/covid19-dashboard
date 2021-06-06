@@ -1,10 +1,7 @@
 import React from "react";
-import { Form, Button, Switch, Menu, message } from "antd";
+import { Form, Button, Switch, message } from "antd";
+import styled from "styled-components";
 const { useForm } = Form;
-
-const tailLayout = {
-  wrapperCol: { offset: 5, span: 14 },
-};
 
 const key = "MESSAGE";
 
@@ -31,10 +28,10 @@ const ViewSettings = ({ closeViewSettings, updateViewConfig, viewConfig }) => {
   };
 
   return (
-    <Menu>
+    <ViewSettingsContainer>
       <Form
-        labelCol={{ span: 4 }}
-        wrapperCol={{ span: 14 }}
+        labelCol={{ span: 3 }}
+        wrapperCol={{ span: 10 }}
         layout="horizontal"
         onFinish={onFinish}
         initialValues={initialValues}
@@ -57,8 +54,8 @@ const ViewSettings = ({ closeViewSettings, updateViewConfig, viewConfig }) => {
           <Switch checkedChildren="show" unCheckedChildren="hide" />
         </Form.Item>
         <Form.Item
-          name="showTotalDeath"
-          label="Total Death"
+          name="showTotalDeaths"
+          label="Total Deaths"
           valuePropName="checked"
           initialValue={true}
         >
@@ -72,7 +69,7 @@ const ViewSettings = ({ closeViewSettings, updateViewConfig, viewConfig }) => {
         >
           <Switch checkedChildren="show" unCheckedChildren="hide" />
         </Form.Item>
-        <Form.Item {...tailLayout}>
+        <Form.Item wrapperCol={{ offset: 3 }}>
           <Button type="primary" htmlType="submit" onClick={openMessage}>
             Save
           </Button>
@@ -81,8 +78,13 @@ const ViewSettings = ({ closeViewSettings, updateViewConfig, viewConfig }) => {
           </Button>
         </Form.Item>
       </Form>
-    </Menu>
+    </ViewSettingsContainer>
   );
 };
 
 export default ViewSettings;
+
+const ViewSettingsContainer = styled.div`
+  padding: 1rem;
+  background-color: #f0f0f0;
+`;

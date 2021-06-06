@@ -1,7 +1,7 @@
 import React from "react";
 import MacroDataCard from "./MacroDataCard";
-import styled from "styled-components";
 import { Typography } from "antd";
+import { ContentContainer, FlexBox } from "./Styles";
 
 const LatestData = ({ latestCovidData, statsDataSrc }) => {
   const { lastUpdatedDate } = latestCovidData;
@@ -15,9 +15,9 @@ const LatestData = ({ latestCovidData, statsDataSrc }) => {
     latestCovidData.newDeaths === null ? "No data" : latestCovidData.newDeaths;
 
   return (
-    <div>
+    <ContentContainer>
       <Typography.Title
-        level={3}
+        level={4}
         style={{ display: "inline-block", marginRight: "1rem" }}
       >
         Daily Update
@@ -34,12 +34,8 @@ const LatestData = ({ latestCovidData, statsDataSrc }) => {
         <MacroDataCard title={"New Deaths"}>{newDeaths}</MacroDataCard>
         <MacroDataCard title={"New Recovered"}>{newRecovered}</MacroDataCard>
       </FlexBox>
-    </div>
+    </ContentContainer>
   );
 };
 
 export default LatestData;
-
-const FlexBox = styled.div`
-  display: flex;
-`;

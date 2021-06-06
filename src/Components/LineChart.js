@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Typography, Radio, Slider, Button } from "antd";
+import { Typography, Radio, Slider, Button, Tooltip } from "antd";
 import {
   XYPlot,
   LineSeries,
@@ -12,6 +12,10 @@ import {
 import { monthToString, formatDate } from "../Utils/";
 import "react-virtualized/styles.css";
 import AutoSizer from "react-virtualized/dist/commonjs/AutoSizer";
+import { ContentContainer } from "./Styles";
+import styled from "styled-components";
+
+const { Text } = Typography;
 
 const LineChart = ({ data, title }) => {
   const [sourceData] = useState(data);
@@ -96,10 +100,17 @@ const LineChart = ({ data, title }) => {
     setRenderData(sourceData);
   };
 
+  const tipFormatter = (value) => {
+    let index = Math.floor((value / 100) * sourceData[mode].length);
+    if (index === sourceData[mode].length) index -= 1;
+    const currentDate = sourceData[mode][index].x;
+    return <span>{formatDate(currentDate)}</span>;
+  };
+
   return (
-    <div>
-      <div style={{ display: "flex" }}>
-        <Typography.Title level={3} style={{ marginRight: "1rem" }}>
+    <ContentContainer marginTop={"4rem"}>
+      <FlexSpaceBetween>
+        <Typography.Title level={4} style={{ marginRight: "1rem" }}>
           {title}
         </Typography.Title>
         <Radio.Group
@@ -109,8 +120,8 @@ const LineChart = ({ data, title }) => {
           optionType="button"
           buttonStyle="solid"
         />
-      </div>
-      <div style={{ width: "100%", height: "300px", marginBottom: "50px" }}>
+      </FlexSpaceBetween>
+      <ChartContainer>
         <AutoSizer>
           {({ height, width }) => (
             <>
@@ -118,7 +129,7 @@ const LineChart = ({ data, title }) => {
                 animation
                 height={height}
                 width={width}
-                margin={{ left: 100, right: 100, top: 10, bottom: 40 }}
+                margin={{ left: 100, right: 100, top: 10, bottom: 50 }}
                 onMouseLeave={removeHint}
                 xType="time"
                 xDomain={
@@ -130,18 +141,17 @@ const LineChart = ({ data, title }) => {
                   0,
                   1.1 * Math.max(...renderData[mode].map((d) => d.y)),
                 ]}
+                style={{ backgroundColor: "#fff" }}
               >
                 {mode === "daily" ? (
-                  <LineSeries data={renderData.daily} onNearestXY={showHint} />
+                  <LineSeries data={renderData.daily} onNearestX={showHint} />
                 ) : (
                   <LineSeries
                     data={renderData.cumulative}
-                    onNearestXY={showHint}
+                    onNearestX={showHint}
                   />
                 )}
-                <Borders style={{ all: { fill: "#fff" } }}>
-                  <Slider range defaultValue={[0, 100]} />
-                </Borders>
+                <Borders style={{ all: { fill: "#fff" } }} />
                 <YAxis />
                 <XAxis
                   hideLine
@@ -163,13 +173,9 @@ const LineChart = ({ data, title }) => {
                   }
                 />
                 {hintValue && (
-                  <Hint value={hintValue} style={{ fontSize: "0.5rem" }}>
-                    <Typography.Paragraph>
-                      {`Date: ${formatDate(hintValue.x)}`}
-                    </Typography.Paragraph>
-                    <Typography.Paragraph>
-                      {`Number: ${hintValue.y}`}
-                    </Typography.Paragraph>
+                  <Hint value={hintValue} style={hintStyle}>
+                    <HintText>{`Date: ${formatDate(hintValue.x)}`}</HintText>
+                    <HintText>{`Number: ${hintValue.y}`}</HintText>
                   </Hint>
                 )}
                 <Highlight
@@ -178,39 +184,67 @@ const LineChart = ({ data, title }) => {
                   onBrushEnd={onBrushHandler}
                 />
               </XYPlot>
-              <div
-                style={{
-                  width: width,
-                  display: "flex",
-                }}
-              >
-                <Button
-                  onClick={resetPlot}
-                  style={{ display: "inline", margin: "0px 15px" }}
-                >
-                  Reset
-                </Button>
-                <div
-                  style={{
-                    display: "inline-block",
-                    width: "100%",
-                    paddingRight: "100px",
-                  }}
-                >
+              <ControlContainer width={width}>
+                <ResetButton onClick={resetPlot}>Reset</ResetButton>
+                <SliderContainer>
                   <Slider
                     range={{ draggableTrack: true }}
                     defaultValue={[0, 100]}
                     value={sliderValue}
                     onChange={onSliderChange}
+                    tipFormatter={tipFormatter}
                   />
-                </div>
-              </div>
+                </SliderContainer>
+              </ControlContainer>
             </>
           )}
         </AutoSizer>
-      </div>
-    </div>
+      </ChartContainer>
+    </ContentContainer>
   );
 };
 
 export default LineChart;
+
+const hintStyle = {
+  minWidth: "30px",
+  minHeight: "32px",
+  fontSize: "0.8rem",
+  backgroundColor: "rgba(0, 0, 0, 0.75)",
+  padding: "6px 8px",
+  borderRadius: "2px",
+  boxShadow:
+    "0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05)",
+};
+
+const FlexSpaceBetween = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const ChartContainer = styled.div`
+  width: 100%;
+  height: 350px;
+`;
+
+const ControlContainer = styled.div`
+  width: ${(props) => `${props.width}px`};
+  margin-top: 1rem;
+  display: flex;
+`;
+
+const ResetButton = styled(Button)`
+  display: inline;
+  margin: 0px 15px;
+`;
+
+const SliderContainer = styled.div`
+  display: inline-block;
+  width: 100%;
+  padding-right: 100px;
+`;
+
+const HintText = styled(Text)`
+  display: block;
+  color: #fff;
+`;

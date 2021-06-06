@@ -1,4 +1,6 @@
-/* @import "~react-vis/dist/style.css"; */
+body {
+  background-color: #bae7ff;
+}
 
 .host-row {
   color: #1890ff;

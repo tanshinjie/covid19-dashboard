@@ -4,6 +4,7 @@ import PastData from "../Components/PastData";
 import VaccinationData from "../Components/VaccinationData";
 import ViewSettings from "../Components/ViewSettings";
 import { Button } from "antd";
+import styled from "styled-components";
 
 const Home = ({ currentCountry, pastDataSrc, latestDataSrc, statsDataSrc }) => {
   const pastData = pastDataSrc[currentCountry];
@@ -30,8 +31,10 @@ const Home = ({ currentCountry, pastDataSrc, latestDataSrc, statsDataSrc }) => {
   };
 
   return (
-    <>
-      <Button onClick={toggleViewSettings}>Customize View</Button>
+    <Container>
+      <ButtonContainer>
+        <Button onClick={toggleViewSettings}>Customize View</Button>
+      </ButtonContainer>
       {shouldOpenViewSettings && (
         <ViewSettings
           closeViewSettings={closeViewSettings}
@@ -50,8 +53,19 @@ const Home = ({ currentCountry, pastDataSrc, latestDataSrc, statsDataSrc }) => {
       {viewConfig.showVaccinationProgress && (
         <VaccinationData vaccinationData={latestData} />
       )}
-    </>
+    </Container>
   );
 };
 
 export default Home;
+
+const Container = styled.div`
+  max-width: 1400px;
+  margin: auto;
+  padding: 2em;
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;

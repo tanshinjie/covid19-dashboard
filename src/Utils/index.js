@@ -1,13 +1,7 @@
 import _ from "lodash";
-import countries from "../Data/countries.json";
 
 export function getAllCountryNameByKey(dataSource, key) {
   return _.map(dataSource, key);
-}
-
-export function getISO(country) {
-  const found = _.find(countries, ["name", country]);
-  return found.alpha3Code;
 }
 
 export function keysToCamel(obj) {
