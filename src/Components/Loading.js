@@ -1,11 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Spin } from "antd";
 
 const Loading = () => {
+  const [tipText, setTipText] = useState(
+    "Loading the world's COVID 19 data..."
+  );
+  setTimeout(() => {
+    setTipText("Almost there...");
+  }, 1000);
+
   return (
     <Backdrop>
-      <Spin size={"large"} tip="Loading the world's COVID 19 data..."></Spin>
+      <Spin size={"large"} tip={tipText} />
     </Backdrop>
   );
 };
