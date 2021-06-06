@@ -10,3 +10,9 @@ export const FlexBox = styled.div`
   width: 100%;
   flex-wrap: wrap;
 `;
+
+export const Container = styled.div`
+  max-width: 1400px;
+  margin: auto;
+  padding: 1em;
+`;

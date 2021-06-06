@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Table, Select } from "antd";
+import { Table, Select, Typography } from "antd";
 import { numberWithCommas } from "../Utils";
 import _ from "lodash";
 import "../App.css";
 import { columns } from "../config";
+import { Container } from "../Components/Styles";
 
 const { Option } = Select;
+const { Paragraph, Text } = Typography;
 
 const Compare = ({ currentCountry, statsData, countryList }) => {
   const [host, setHost] = useState(null);
@@ -74,9 +76,10 @@ const Compare = ({ currentCountry, statsData, countryList }) => {
   };
 
   return (
-    <div>
-      <p>Data Source = VACCOVID - coronavirus, vaccine and treatment tracker</p>
-      <p>Compare with: </p>
+    <Container>
+      <Paragraph>
+        Comparing <Text strong={true}>{host}</Text> with:{" "}
+      </Paragraph>
       <Select
         mode="multiple"
         style={{ width: "100%" }}
@@ -91,12 +94,11 @@ const Compare = ({ currentCountry, statsData, countryList }) => {
         columns={columns}
         dataSource={tableData}
         pagination={false}
-        rowClassName={(record) =>
-          record.country === host ? "host-row" : "guest-row"
-        }
+        rowClassName={(record) => (record.country === host ? "host-row" : "")}
         rowKey={(record) => record.country}
+        scroll={{ y: 500 }}
       />
-    </div>
+    </Container>
   );
 };
 

@@ -3,6 +3,7 @@ export const columns = [
     title: "Country",
     dataIndex: "country",
     key: "country",
+    width: "6.25%",
   },
   {
     title: "Population",
@@ -13,6 +14,7 @@ export const columns = [
         parseInt(a.population.replaceAll(",", "")) -
         parseInt(b.population.replaceAll(",", "")),
     },
+    width: "8.25%",
   },
   {
     title: "Total Tests",
@@ -23,6 +25,7 @@ export const columns = [
         parseInt(a.totalTests.replaceAll(",", "")) -
         parseInt(b.totalTests.replaceAll(",", "")),
     },
+    width: "7.25%",
   },
   {
     title: "Infection Risk",
@@ -33,6 +36,7 @@ export const columns = [
         parseInt(a.infectionRisk.replaceAll(",", "")) -
         parseInt(b.infectionRisk.replaceAll(",", "")),
     },
+    width: "5.25%",
   },
   {
     title: "Case Fatality Rate",
@@ -43,6 +47,7 @@ export const columns = [
         parseInt(a.caseFatalityRate.replaceAll(",", "")) -
         parseInt(b.caseFatalityRate.replaceAll(",", "")),
     },
+    width: "5.25%",
   },
   {
     title: "Test Percentage",
@@ -53,6 +58,7 @@ export const columns = [
         parseInt(a.testPercentage.replaceAll(",", "")) -
         parseInt(b.testPercentage.replaceAll(",", "")),
     },
+    width: "5.25%",
   },
   {
     title: "Recovery Proportion",
@@ -63,6 +69,7 @@ export const columns = [
         parseInt(a.recoveryProporation.replaceAll(",", "")) -
         parseInt(b.recoveryProporation.replaceAll(",", "")),
     },
+    width: "5.25%",
   },
   {
     title: "Total Cases",
@@ -73,6 +80,7 @@ export const columns = [
         parseInt(a.totalCases.replaceAll(",", "")) -
         parseInt(b.totalCases.replaceAll(",", "")),
     },
+    width: "7.25%",
   },
   {
     title: "Total Deaths",
@@ -83,6 +91,7 @@ export const columns = [
         parseInt(a.totalDeaths.replaceAll(",", "")) -
         parseInt(b.totalDeaths.replaceAll(",", "")),
     },
+    width: "7.25%",
   },
   {
     title: "Total Recovered",
@@ -93,6 +102,7 @@ export const columns = [
         parseInt(a.totalRecovered.replaceAll(",", "")) -
         parseInt(b.totalRecovered.replaceAll(",", "")),
     },
+    width: "6.25%",
   },
   {
     title: "One Case Every X Ppl",
@@ -103,6 +113,7 @@ export const columns = [
         parseInt(a.oneCaseeveryXPpl.replaceAll(",", "")) -
         parseInt(b.oneCaseeveryXPpl.replaceAll(",", "")),
     },
+    width: "5.25%",
   },
   {
     title: "One Death Every X Ppl",
@@ -113,6 +124,7 @@ export const columns = [
         parseInt(a.oneDeatheveryXPpl.replaceAll(",", "")) -
         parseInt(b.oneDeatheveryXPpl.replaceAll(",", "")),
     },
+    width: "5.25%",
   },
   {
     title: "Deaths 1M Pop",
@@ -123,6 +135,7 @@ export const columns = [
         parseInt(a.deaths1MPop.replaceAll(",", "")) -
         parseInt(b.deaths1MPop.replaceAll(",", "")),
     },
+    width: "5.25%",
   },
   {
     title: "Tests 1M Pop",
@@ -133,6 +146,7 @@ export const columns = [
         parseInt(a.tests1MPop.replaceAll(",", "")) -
         parseInt(b.tests1MPop.replaceAll(",", "")),
     },
+    width: "7.25%",
   },
   {
     title: "Total Cases 1M Pop",
@@ -143,5 +157,6 @@ export const columns = [
         parseInt(a.totCases1MPop.replaceAll(",", "")) -
         parseInt(b.totCases1MPop.replaceAll(",", "")),
     },
+    width: "7.25%",
   },
 ];
