@@ -11,6 +11,7 @@ import { keysToCamel } from "./Utils";
 import mockLatestData from "./Data/latest.json";
 import mockPastData from "./Data/past.json";
 import mockWorldStats from "./Data/world-stats.json";
+import Footer from "./Components/Footer";
 
 const COUNTRY_RENAME = {
   "Cape Verde": "Cabo Verde",
@@ -208,6 +209,7 @@ const App = () => {
           }
         />
       </Switch>
+      <Footer />
     </Router>
   );
 };
