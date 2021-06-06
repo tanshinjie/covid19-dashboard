@@ -6,12 +6,9 @@ import ViewSettings from "../Components/ViewSettings";
 import { Button } from "antd";
 
 const Home = ({ currentCountry, pastDataSrc, latestDataSrc, statsDataSrc }) => {
-  const [pastData] = useState(pastDataSrc[currentCountry]);
-  const [latestData] = useState(latestDataSrc[currentCountry]);
-  const [statsData] = useState(statsDataSrc[currentCountry]);
-
-  console.log("Home statsDataSrc", statsDataSrc);
-  console.log("Home statsData", statsData);
+  const pastData = pastDataSrc[currentCountry];
+  const latestData = latestDataSrc[currentCountry];
+  const statsData = statsDataSrc[currentCountry];
 
   const [viewConfig, setViewConfig] = useState({
     showLatestData: true,

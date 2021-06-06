@@ -4,41 +4,42 @@ import styled from "styled-components";
 import { Typography } from "antd";
 
 const LatestData = ({ latestCovidData, statsDataSrc }) => {
-  console.log("LatestData", statsDataSrc);
+  const { lastUpdatedDate } = latestCovidData;
+  const newCases =
+    latestCovidData.newCases === null ? "No data" : latestCovidData.newCases;
+  const activeCases =
+    statsDataSrc.activeCases === null ? "No data" : statsDataSrc.activeCases;
+  const newRecovered =
+    statsDataSrc.newRecovered === null ? "No data" : statsDataSrc.newRecovered;
+  const newDeaths =
+    latestCovidData.newDeaths === null ? "No data" : latestCovidData.newDeaths;
+
   return (
     <div>
       <Typography.Title
         level={3}
         style={{ display: "inline-block", marginRight: "1rem" }}
       >
-        Daily update
+        Daily Update
       </Typography.Title>
       <Typography.Title
         level={5}
         style={{ display: "inline-block", marginRight: "1rem" }}
       >
-        {latestCovidData.lastUpdatedDate}
+        {lastUpdatedDate}
       </Typography.Title>
-      <MacroDataContainer>
-        <MacroDataCard title={"Active Cases"}>
-          {statsDataSrc.activeCases}
-        </MacroDataCard>
-        <MacroDataCard title={"New Cases"}>
-          {statsDataSrc.newCases}
-        </MacroDataCard>
-        <MacroDataCard title={"New Deaths"}>
-          {statsDataSrc.newDeaths}
-        </MacroDataCard>
-        <MacroDataCard title={"New Recovered"}>
-          {statsDataSrc.newRecovered}
-        </MacroDataCard>
-      </MacroDataContainer>
+      <FlexBox>
+        <MacroDataCard title={"Active Cases"}>{activeCases}</MacroDataCard>
+        <MacroDataCard title={"New Cases"}>{newCases}</MacroDataCard>
+        <MacroDataCard title={"New Deaths"}>{newDeaths}</MacroDataCard>
+        <MacroDataCard title={"New Recovered"}>{newRecovered}</MacroDataCard>
+      </FlexBox>
     </div>
   );
 };
 
 export default LatestData;
 
-const MacroDataContainer = styled.div`
+const FlexBox = styled.div`
   display: flex;
 `;

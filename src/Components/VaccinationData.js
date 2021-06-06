@@ -3,11 +3,20 @@ import { Progress, Tooltip, Typography } from "antd";
 import { numberWithCommas } from "../Utils";
 
 const VaccinationData = ({ vaccinationData }) => {
+  const peopleVaccinated = vaccinationData.peopleVaccinated
+    ? vaccinationData.peopleVaccinated
+    : 0;
+  const peopleFullyVaccinated = vaccinationData.peopleFullyVaccinated
+    ? vaccinationData.peopleFullyVaccinated
+    : 0;
+  const population = vaccinationData.population
+    ? vaccinationData.population
+    : 0;
   const vaccinatedOverPopulation = Math.floor(
-    (vaccinationData.peopleVaccinated / vaccinationData.population) * 100
+    (peopleVaccinated / population) * 100
   );
   const fullyVaccinatedOverPopulation = Math.floor(
-    (vaccinationData.peopleFullyVaccinated / vaccinationData.population) * 100
+    (peopleFullyVaccinated / population) * 100
   );
 
   return (
@@ -16,21 +25,21 @@ const VaccinationData = ({ vaccinationData }) => {
       <div style={{ padding: "100px" }}>
         <div style={{ display: "flex", justifyContent: "space-around" }}>
           <Typography.Paragraph>{`People fully vaccinated: ${numberWithCommas(
-            vaccinationData.peopleFullyVaccinated
+            peopleFullyVaccinated
           )} (${fullyVaccinatedOverPopulation}%)`}</Typography.Paragraph>
           <Typography.Paragraph>{`People vaccinated: ${numberWithCommas(
-            vaccinationData.peopleVaccinated
+            peopleVaccinated
           )} (${vaccinatedOverPopulation}%)`}</Typography.Paragraph>
           <Typography.Paragraph>{`Population: ${numberWithCommas(
-            vaccinationData.population
+            population
           )}`}</Typography.Paragraph>
         </div>
         <Tooltip
           title={`People fully vaccinated: ${numberWithCommas(
-            vaccinationData.peopleFullyVaccinated
+            peopleFullyVaccinated
           )} People vaccinated: ${numberWithCommas(
-            vaccinationData.peopleVaccinated
-          )} Population: ${numberWithCommas(vaccinationData.population)}`}
+            peopleVaccinated
+          )} Population: ${numberWithCommas(population)}`}
         >
           <Progress
             percent={vaccinatedOverPopulation}

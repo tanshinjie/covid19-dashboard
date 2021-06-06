@@ -3,26 +3,26 @@ import { Select, Typography } from "antd";
 import { getAllCountryNameByKey } from "../Utils";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import countriesData from "../Data/countries.json";
-import countriesWorldState from "../Data/world-stats.json";
+// import countriesData from "../Data/countries.json";
+// import countriesWorldState from "../Data/world-stats.json";
 const { Option } = Select;
 
-const countries = getAllCountryNameByKey(countriesData, "name");
-const countriesWorldStateList = [
-  ...getAllCountryNameByKey(countriesWorldState, "Country").slice(
-    2,
-    countriesWorldState.length - 1
-  ),
-].sort();
+// const countries = getAllCountryNameByKey(countriesData, "name");
+// const countriesWorldStateList = [
+//   ...getAllCountryNameByKey(countriesWorldState, "Country").slice(
+//     2,
+//     countriesWorldState.length - 1
+//   ),
+// ].sort();
 
-console.log(countries);
-console.log(countriesWorldStateList);
+// console.log(countries);
+// console.log(countriesWorldStateList);
 
-const Navigation = ({ currentCountry, changeCountry }) => {
+const Navigation = ({ currentCountry, changeCountry, countryList }) => {
   const onChangeCountry = (value) => {
     changeCountry(value);
   };
-  const options = countries.map((c) => (
+  const options = countryList.map((c) => (
     <Option key={c} value={c}>
       {c}
     </Option>

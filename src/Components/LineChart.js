@@ -146,14 +146,21 @@ const LineChart = ({ data, title }) => {
                 <XAxis
                   hideLine
                   tickFormat={(t) => {
-                    if (t.getDate() === 1) {
-                      return `${monthToString(
-                        t.getMonth()
-                      )} ${t.getFullYear()}`;
+                    if (sliderValue[1] - sliderValue[0] < 50) {
+                      return t.toLocaleString("en-GB").split(",")[0];
                     } else {
-                      return;
+                      if (t.getDate() === 1) {
+                        return `${monthToString(
+                          t.getMonth()
+                        )} ${t.getFullYear()}`;
+                      } else {
+                        return;
+                      }
                     }
                   }}
+                  tickLabelAngle={
+                    sliderValue[1] - sliderValue[0] < 50 ? -30 : 0
+                  }
                 />
                 {hintValue && (
                   <Hint value={hintValue} style={{ fontSize: "0.5rem" }}>

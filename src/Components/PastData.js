@@ -47,14 +47,10 @@ const PastData = ({ covidData, showTotalCases, showTotalDeath }) => {
   const caseData = { daily: newCases, cumulative: totalCases };
   const deathData = { daily: newDeaths, cumulative: totalDeaths };
   return (
-    <>
-      <Typography.Title level={3}>
-        {showTotalCases && <LineChart data={caseData} title={"Total Cases"} />}
-        {showTotalDeath && (
-          <LineChart data={deathData} title={"Total Deaths"} />
-        )}
-      </Typography.Title>
-    </>
+    <Typography.Title level={3}>
+      {showTotalCases && <LineChart data={caseData} title={"Total Cases"} />}
+      {showTotalDeath && <LineChart data={deathData} title={"Total Deaths"} />}
+    </Typography.Title>
   );
 };
 

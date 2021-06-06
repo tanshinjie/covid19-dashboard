@@ -5,9 +5,23 @@ import "../node_modules/react-vis/dist/style.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./Pages/Home";
 import Compare from "./Pages/Compare";
-import _ from "lodash";
+import _, { entries } from "lodash";
 import axios from "axios";
 import { keysToCamel } from "./Utils";
+
+const COUNTRY_RENAME = {
+  "Cape Verde": "Cabo Verde",
+  CAR: "Central African Republic",
+  USA: "United States",
+  UK: "United Kingdom",
+  UAE: "United Arab Emirates",
+  "S. Korea": "South Korea",
+  DRC: "Democratic Republic of Congo",
+  "Sint Maarten": "Sint Maarten (Dutch part)",
+  "Vatican City": "Vatican",
+  "Turks and Caicos": "Turks and Caicos Islands",
+  "Timor-Leste": "Timor",
+};
 
 const App = () => {
   const [currentCountry, setCurrentCountry] = useState("Singapore");
@@ -35,6 +49,7 @@ const App = () => {
           const { data } = result;
 
           Object.values(data).map((entry) => countries.push(entry.location));
+          console.log("countries1", countries);
           Object.values(data).forEach((entry) => {
             newLatestData[entry.location] = { ...keysToCamel(entry) };
           });
@@ -49,6 +64,10 @@ const App = () => {
           const { data } = result;
           countries = _.intersection(
             countries,
+            Object.values(data).map((entry) => entry.location)
+          );
+          console.log(
+            "countries",
             Object.values(data).map((entry) => entry.location)
           );
           newPastData = {};
@@ -76,10 +95,20 @@ const App = () => {
             .map((entry) => entry.Country)
             .slice(2);
           countries = _.intersection(countries, apiSourceCountryList);
-          setCountryList(countries);
+
           Object.values(data).forEach((entry) => {
-            newStatsData[entry.Country] = { ...keysToCamel(entry) };
+            if (Object.keys(COUNTRY_RENAME).includes(entry.Country)) {
+              newStatsData[COUNTRY_RENAME[entry.Country]] = {
+                ...keysToCamel(entry),
+                country: COUNTRY_RENAME[entry.Country],
+              };
+            } else {
+              newStatsData[entry.Country] = { ...keysToCamel(entry) };
+            }
           });
+          countries = countries.concat([...Object.values(COUNTRY_RENAME)]);
+          countries.sort();
+          setCountryList(countries);
           console.log("newStatsData", newStatsData);
           setLatestData(newLatestData);
           setPastData(newPastData);
@@ -93,10 +122,15 @@ const App = () => {
 
   return (
     <Router>
-      <Navigation
-        currentCountry={currentCountry}
-        changeCountry={changeCountry}
-      />
+      {countryList.length > 0 ? (
+        <Navigation
+          currentCountry={currentCountry}
+          changeCountry={changeCountry}
+          countryList={countryList}
+        />
+      ) : (
+        <div>LOADING...</div>
+      )}
       <Switch>
         <Route
           path="/compare"
