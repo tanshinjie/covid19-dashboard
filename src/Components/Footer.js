@@ -21,7 +21,7 @@ const Footer = () => {
         </Typography.Link>
         ,
         <Typography.Link
-          href="https://github.com/owid/covid-19-data/tree/master/public/data"
+          href="https://rapidapi.com/vaccovidlive-vaccovidlive-default/api/vaccovid-coronavirus-vaccine-and-treatment-tracker/"
           target="_blank"
         >
           Vaccovid API
