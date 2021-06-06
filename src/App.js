@@ -8,9 +8,6 @@ import Compare from "./Pages/Compare";
 import _ from "lodash";
 import axios from "axios";
 import { keysToCamel } from "./Utils";
-import mockLatestData from "./Data/latest.json";
-import mockPastData from "./Data/past.json";
-import mockWorldStats from "./Data/world-stats.json";
 import Footer from "./Components/Footer";
 import Loading from "./Components/Loading";
 
@@ -45,49 +42,6 @@ const App = () => {
       let newPastData = {};
       let newStatsData = {};
       let newLatestData = {};
-
-      // Object.values(mockLatestData).map((entry) =>
-      //   countries.push(entry.location)
-      // );
-
-      // Object.values(mockLatestData).forEach((entry) => {
-      //   newLatestData[entry.location] = { ...keysToCamel(entry) };
-      // });
-      // console.log("newLatestData", newLatestData);
-
-      // countries = _.intersection(
-      //   countries,
-      //   Object.values(mockLatestData).map((entry) => entry.location)
-      // );
-
-      // newPastData = {};
-      // Object.values(mockPastData).forEach((entry) => {
-      //   newPastData[entry.location] = { ...keysToCamel(entry) };
-      // });
-      // console.log("newPastData", newPastData);
-
-      // const apiSourceCountryList = Object.values(mockWorldStats)
-      //   .map((entry) => entry.country)
-      //   .slice(2);
-      // countries = _.intersection(countries, apiSourceCountryList);
-
-      // Object.values(mockWorldStats).forEach((entry) => {
-      //   if (Object.keys(COUNTRY_RENAME).includes(entry.country)) {
-      //     newStatsData[COUNTRY_RENAME[entry.country]] = {
-      //       ...keysToCamel(entry),
-      //       country: COUNTRY_RENAME[entry.country],
-      //     };
-      //   } else {
-      //     newStatsData[entry.country] = { ...keysToCamel(entry) };
-      //   }
-      // });
-      // console.log("newStatsData", newStatsData);
-      // countries = countries.concat([...Object.values(COUNTRY_RENAME)]);
-      // countries.sort();
-      // setCountryList(countries);
-      // setLatestData(newLatestData);
-      // setPastData(newPastData);
-      // setStatsData(newStatsData);
 
       axios
         .get(
