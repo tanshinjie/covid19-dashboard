@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Typography, Radio, Slider, Button, Tooltip } from "antd";
+import { Typography, Radio, Slider, Button } from "antd";
 import {
   XYPlot,
   LineSeries,

@@ -3,7 +3,7 @@ import LineChart from "./LineChart";
 import _ from "lodash";
 import { ContentContainer } from "./Styles";
 
-const PastData = ({ covidData, showTotalCases, showTotalDeath }) => {
+const PastData = ({ covidData, showTotalCases, showTotalDeaths }) => {
   const data = covidData.data;
 
   const newCasesDirty = _.map(data, (obj) => _.pick(obj, ["date", "newCases"]));
@@ -49,7 +49,7 @@ const PastData = ({ covidData, showTotalCases, showTotalDeath }) => {
   return (
     <ContentContainer>
       {showTotalCases && <LineChart data={caseData} title={"Total Cases"} />}
-      {showTotalDeath && <LineChart data={deathData} title={"Total Deaths"} />}
+      {showTotalDeaths && <LineChart data={deathData} title={"Total Deaths"} />}
     </ContentContainer>
   );
 };

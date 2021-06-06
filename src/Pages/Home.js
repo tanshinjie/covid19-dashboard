@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import LatestData from "../Components/LatestData";
 import PastData from "../Components/PastData";
 import VaccinationData from "../Components/VaccinationData";
@@ -7,17 +7,31 @@ import { Button } from "antd";
 import styled from "styled-components";
 import { Container } from "../Components/Styles";
 
+const LOCAL_STORAGE_KEY = "viewSettings";
+
 const Home = ({ currentCountry, pastDataSrc, latestDataSrc, statsDataSrc }) => {
   const pastData = pastDataSrc[currentCountry];
   const latestData = latestDataSrc[currentCountry];
   const statsData = statsDataSrc[currentCountry];
 
-  const [viewConfig, setViewConfig] = useState({
-    showLatestData: true,
-    showTotalCases: true,
-    showTotalDeath: true,
-    showVaccinationProgress: true,
-  });
+  const [viewConfig, setViewConfig] = useState(null);
+
+  useEffect(() => {
+    if (viewConfig === null) {
+      if (localStorage.getItem(LOCAL_STORAGE_KEY) !== null) {
+        setViewConfig(JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)));
+      } else {
+        const viewConfigInitialValues = {
+          showLatestData: true,
+          showTotalCases: true,
+          showTotalDeaths: true,
+          showVaccinationProgress: true,
+        };
+        setViewConfig(viewConfigInitialValues);
+      }
+    }
+  }, [viewConfig]);
+
   const [shouldOpenViewSettings, setShouldOpenViewSettings] = useState(false);
 
   const toggleViewSettings = () => {
@@ -28,6 +42,7 @@ const Home = ({ currentCountry, pastDataSrc, latestDataSrc, statsDataSrc }) => {
   };
 
   const updateViewConfig = (value) => {
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(value));
     setViewConfig(value);
   };
 
@@ -36,22 +51,24 @@ const Home = ({ currentCountry, pastDataSrc, latestDataSrc, statsDataSrc }) => {
       <ButtonContainer>
         <Button onClick={toggleViewSettings}>Customize View</Button>
       </ButtonContainer>
-      {shouldOpenViewSettings && (
+      {shouldOpenViewSettings && viewConfig && (
         <ViewSettings
           closeViewSettings={closeViewSettings}
           updateViewConfig={updateViewConfig}
           viewConfig={viewConfig}
         />
       )}
-      {viewConfig.showLatestData && (
+      {viewConfig && viewConfig.showLatestData && (
         <LatestData latestCovidData={latestData} statsDataSrc={statsData} />
       )}
-      <PastData
-        covidData={pastData}
-        showTotalCases={viewConfig.showTotalCases}
-        showTotalDeath={viewConfig.showTotalDeath}
-      />
-      {viewConfig.showVaccinationProgress && (
+      {viewConfig && (
+        <PastData
+          covidData={pastData}
+          showTotalCases={viewConfig.showTotalCases}
+          showTotalDeaths={viewConfig.showTotalDeaths}
+        />
+      )}
+      {viewConfig && viewConfig.showVaccinationProgress && (
         <VaccinationData vaccinationData={latestData} />
       )}
     </Container>

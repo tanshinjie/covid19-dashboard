@@ -7,6 +7,7 @@ const key = "MESSAGE";
 
 const ViewSettings = ({ closeViewSettings, updateViewConfig, viewConfig }) => {
   const [form] = useForm();
+
   const initialValues = {
     ...viewConfig,
   };
@@ -23,8 +24,8 @@ const ViewSettings = ({ closeViewSettings, updateViewConfig, viewConfig }) => {
   };
 
   const onFinish = (values) => {
-    console.log(values);
     updateViewConfig({ ...values });
+    closeViewSettings();
   };
 
   return (
