@@ -4,9 +4,12 @@ body {
 
 .host-row {
   color: #1890ff;
-  border: 1px solid black;
 }
 
 .ant-table table {
   font-size: 12px;
+}
+
+.export {
+  overflow: visible;
 }

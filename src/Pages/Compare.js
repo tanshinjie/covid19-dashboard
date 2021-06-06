@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { Table, Select, Typography } from "antd";
-import { numberWithCommas } from "../Utils";
+import { Table, Select, Typography, Button } from "antd";
+import { numberWithCommas, exportAsPng } from "../Utils";
 import _ from "lodash";
 import "../App.css";
-import { columns } from "../config";
-import { Container } from "../Components/Styles";
+import { columns } from "../Config";
+import { Container, FlexSpaceBetween } from "../Styles";
 
 const { Option } = Select;
-const { Paragraph, Text } = Typography;
+const { Text } = Typography;
 
 const Compare = ({ currentCountry, statsData, countryList }) => {
   const [host, setHost] = useState(null);
   const [guests, setGuests] = useState([]);
   const [tableData, setTableData] = useState([]);
   const [shouldUpdate, setShouldUpdate] = useState(false);
+  const [isExporting, setIsExporting] = useState(false);
 
   const options = countryList.map((c) => (
     <Option key={c} value={c} disabled={c === host}>
@@ -75,11 +76,20 @@ const Compare = ({ currentCountry, statsData, countryList }) => {
     setShouldUpdate(true);
   };
 
+  const exportAsImage = () => {
+    setIsExporting(true);
+    setTimeout(() => exportAsPng(), 0);
+    setTimeout(() => setIsExporting(false), 0);
+  };
+
   return (
     <Container>
-      <Paragraph>
-        Comparing <Text strong={true}>{host}</Text> with:{" "}
-      </Paragraph>
+      <FlexSpaceBetween>
+        <Text>
+          Comparing <Text strong={true}>{host}</Text> with:&nbsp;
+        </Text>
+        <Button onClick={exportAsImage}>Export as Image</Button>
+      </FlexSpaceBetween>
       <Select
         mode="multiple"
         style={{ width: "100%" }}
@@ -90,13 +100,15 @@ const Compare = ({ currentCountry, statsData, countryList }) => {
         {options}
       </Select>
       <Table
+        id="compareTable"
         bordered={true}
         columns={columns}
         dataSource={tableData}
         pagination={false}
         rowClassName={(record) => (record.country === host ? "host-row" : "")}
         rowKey={(record) => record.country}
-        scroll={{ y: 500 }}
+        className={isExporting ? "ant-table-body" : "export"}
+        scroll={isExporting ? null : { y: 500 }}
       />
     </Container>
   );

@@ -1,6 +1,6 @@
 import React from "react";
 import { Typography } from "antd";
-import { Container } from "./Styles";
+import { Container } from "../Styles";
 
 const Footer = () => {
   return (

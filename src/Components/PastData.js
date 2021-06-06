@@ -1,7 +1,7 @@
 import React from "react";
 import LineChart from "./LineChart";
 import _ from "lodash";
-import { ContentContainer } from "./Styles";
+import { ContentContainer } from "../Styles";
 
 const PastData = ({ covidData, showTotalCases, showTotalDeaths }) => {
   const data = covidData.data;

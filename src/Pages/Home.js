@@ -5,7 +5,7 @@ import VaccinationData from "../Components/VaccinationData";
 import ViewSettings from "../Components/ViewSettings";
 import { Button } from "antd";
 import styled from "styled-components";
-import { Container } from "../Components/Styles";
+import { Container } from "../Styles";
 
 const LOCAL_STORAGE_KEY = "viewSettings";
 

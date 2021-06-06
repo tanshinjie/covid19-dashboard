@@ -1,7 +1,7 @@
 import React from "react";
 import MacroDataCard from "./MacroDataCard";
 import { Typography } from "antd";
-import { ContentContainer, FlexBox } from "./Styles";
+import { ContentContainer, FlexBox } from "../Styles";
 
 const LatestData = ({ latestCovidData, statsDataSrc }) => {
   const { lastUpdatedDate } = latestCovidData;

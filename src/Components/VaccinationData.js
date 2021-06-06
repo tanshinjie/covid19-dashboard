@@ -2,7 +2,7 @@ import React from "react";
 import { Progress, Tooltip, Typography } from "antd";
 import { numberWithCommas } from "../Utils";
 import styled from "styled-components";
-import { ContentContainer } from "./Styles";
+import { ContentContainer } from "../Styles";
 const { Title, Paragraph } = Typography;
 
 const VaccinationData = ({ vaccinationData }) => {
