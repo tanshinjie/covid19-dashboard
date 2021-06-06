@@ -22,7 +22,6 @@ const Compare = ({ currentCountry, statsData, countryList }) => {
     </Option>
   ));
   useEffect(() => {
-    console.log("useEffect host !== currentCountry", host !== currentCountry);
     if (host !== currentCountry) {
       setHost(currentCountry);
       setShouldUpdate(true);
@@ -30,13 +29,11 @@ const Compare = ({ currentCountry, statsData, countryList }) => {
   }, [host, guests, currentCountry]);
 
   useEffect(() => {
-    console.log("useEffect shouldUpdate", shouldUpdate);
     if (shouldUpdate) {
       const hostData = statsData[host];
       const hostReformatData = _.assign(
         _.pick(hostData, [...columns.map((c) => c.key)])
       );
-      console.log(hostReformatData);
       for (const key in hostReformatData) {
         if (key !== "country") {
           hostReformatData[key] = numberWithCommas(

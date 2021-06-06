@@ -12,6 +12,7 @@ import mockLatestData from "./Data/latest.json";
 import mockPastData from "./Data/past.json";
 import mockWorldStats from "./Data/world-stats.json";
 import Footer from "./Components/Footer";
+import Loading from "./Components/Loading";
 
 const COUNTRY_RENAME = {
   "Cape Verde": "Cabo Verde",
@@ -45,144 +46,139 @@ const App = () => {
       let newStatsData = {};
       let newLatestData = {};
 
-      Object.values(mockLatestData).map((entry) =>
-        countries.push(entry.location)
-      );
+      // Object.values(mockLatestData).map((entry) =>
+      //   countries.push(entry.location)
+      // );
 
-      Object.values(mockLatestData).forEach((entry) => {
-        newLatestData[entry.location] = { ...keysToCamel(entry) };
-      });
-      console.log("newLatestData", newLatestData);
+      // Object.values(mockLatestData).forEach((entry) => {
+      //   newLatestData[entry.location] = { ...keysToCamel(entry) };
+      // });
+      // console.log("newLatestData", newLatestData);
 
-      countries = _.intersection(
-        countries,
-        Object.values(mockLatestData).map((entry) => entry.location)
-      );
+      // countries = _.intersection(
+      //   countries,
+      //   Object.values(mockLatestData).map((entry) => entry.location)
+      // );
 
-      newPastData = {};
-      Object.values(mockPastData).forEach((entry) => {
-        newPastData[entry.location] = { ...keysToCamel(entry) };
-      });
-      console.log("newPastData", newPastData);
+      // newPastData = {};
+      // Object.values(mockPastData).forEach((entry) => {
+      //   newPastData[entry.location] = { ...keysToCamel(entry) };
+      // });
+      // console.log("newPastData", newPastData);
 
-      const apiSourceCountryList = Object.values(mockWorldStats)
-        .map((entry) => entry.country)
-        .slice(2);
-      countries = _.intersection(countries, apiSourceCountryList);
+      // const apiSourceCountryList = Object.values(mockWorldStats)
+      //   .map((entry) => entry.country)
+      //   .slice(2);
+      // countries = _.intersection(countries, apiSourceCountryList);
 
-      Object.values(mockWorldStats).forEach((entry) => {
-        if (Object.keys(COUNTRY_RENAME).includes(entry.country)) {
-          newStatsData[COUNTRY_RENAME[entry.country]] = {
-            ...keysToCamel(entry),
-            country: COUNTRY_RENAME[entry.country],
-          };
-        } else {
-          newStatsData[entry.country] = { ...keysToCamel(entry) };
-        }
-      });
-      console.log("newStatsData", newStatsData);
-      countries = countries.concat([...Object.values(COUNTRY_RENAME)]);
-      countries.sort();
-      setCountryList(countries);
-      setLatestData(newLatestData);
-      setPastData(newPastData);
-      setStatsData(newStatsData);
+      // Object.values(mockWorldStats).forEach((entry) => {
+      //   if (Object.keys(COUNTRY_RENAME).includes(entry.country)) {
+      //     newStatsData[COUNTRY_RENAME[entry.country]] = {
+      //       ...keysToCamel(entry),
+      //       country: COUNTRY_RENAME[entry.country],
+      //     };
+      //   } else {
+      //     newStatsData[entry.country] = { ...keysToCamel(entry) };
+      //   }
+      // });
+      // console.log("newStatsData", newStatsData);
+      // countries = countries.concat([...Object.values(COUNTRY_RENAME)]);
+      // countries.sort();
+      // setCountryList(countries);
+      // setLatestData(newLatestData);
+      // setPastData(newPastData);
+      // setStatsData(newStatsData);
 
-      // axios
-      //   .get(
-      //     "https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/latest/owid-covid-latest.json"
-      //   )
-      //   .then((result) => {
-      //     const { data } = result;
+      axios
+        .get(
+          "https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/latest/owid-covid-latest.json"
+        )
+        .then((result) => {
+          const { data } = result;
 
-      //     Object.values(data).map((entry) => countries.push(entry.location));
-      //     console.log("countries1", countries);
-      //     Object.values(data).forEach((entry) => {
-      //       newLatestData[entry.location] = { ...keysToCamel(entry) };
-      //     });
-      //     console.log("newLatestData", newLatestData);
-      //   })
-      //   .catch((err) => console.log(err));
-      // axios
-      //   .get(
-      //     "https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/owid-covid-data.json" // this is for line chart
-      //   )
-      //   .then((result) => {
-      //     const { data } = result;
-      //     countries = _.intersection(
-      //       countries,
-      //       Object.values(data).map((entry) => entry.location)
-      //     );
-      //     console.log(
-      //       "countries",
-      //       Object.values(data).map((entry) => entry.location)
-      //     );
-      //     newPastData = {};
-      //     Object.values(data).forEach((entry) => {
-      //       newPastData[entry.location] = { ...keysToCamel(entry) };
-      //     });
-      //     console.log("newPastData", newPastData);
-      //   })
-      //   .catch((err) => console.log(err));
+          Object.values(data).map((entry) => countries.push(entry.location));
+          Object.values(data).forEach((entry) => {
+            newLatestData[entry.location] = { ...keysToCamel(entry) };
+          });
+          console.log("newLatestData", newLatestData);
+        })
+        .catch((err) => console.log(err));
+      axios
+        .get(
+          "https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/owid-covid-data.json" // this is for line chart
+        )
+        .then((result) => {
+          const { data } = result;
+          countries = _.intersection(
+            countries,
+            Object.values(data).map((entry) => entry.location)
+          );
+          newPastData = {};
+          Object.values(data).forEach((entry) => {
+            newPastData[entry.location] = { ...keysToCamel(entry) };
+          });
+          console.log("newPastData", newPastData);
+        })
+        .catch((err) => console.log(err));
 
-      // const options = {
-      //   method: "GET",
-      //   url: "https://vaccovid-coronavirus-vaccine-and-treatment-tracker.p.rapidapi.com/api/npm-covid-data/", // this is for
-      //   headers: {
-      //     "x-rapidapi-key": process.env.REACT_APP_X_RAPIDAPI_KEY,
-      //     "x-rapidapi-host": process.env.REACT_APP_X_RAPIDAPI_HOST_VACCOID,
-      //   },
-      // };
+      const options = {
+        method: "GET",
+        url: "https://vaccovid-coronavirus-vaccine-and-treatment-tracker.p.rapidapi.com/api/npm-covid-data/", // this is for
+        headers: {
+          "x-rapidapi-key": process.env.REACT_APP_X_RAPIDAPI_KEY,
+          "x-rapidapi-host": process.env.REACT_APP_X_RAPIDAPI_HOST_VACCOID,
+        },
+      };
 
-      // axios
-      //   .request(options)
-      //   .then((result) => {
-      //     const { data } = result;
-      //     const apiSourceCountryList = data
-      //       .map((entry) => entry.Country)
-      //       .slice(2);
-      //     countries = _.intersection(countries, apiSourceCountryList);
+      axios
+        .request(options)
+        .then((result) => {
+          const { data } = result;
+          const apiSourceCountryList = data
+            .map((entry) => entry.Country)
+            .slice(2);
+          countries = _.intersection(countries, apiSourceCountryList);
 
-      //     Object.values(data).forEach((entry) => {
-      //       if (Object.keys(COUNTRY_RENAME).includes(entry.Country)) {
-      //         newStatsData[COUNTRY_RENAME[entry.Country]] = {
-      //           ...keysToCamel(entry),
-      //           country: COUNTRY_RENAME[entry.Country],
-      //         };
-      //       } else {
-      //         newStatsData[entry.Country] = { ...keysToCamel(entry) };
-      //       }
-      //     });
-      //     countries = countries.concat([...Object.values(COUNTRY_RENAME)]);
-      //     countries.sort();
-      //     setCountryList(countries);
-      //     console.log("newStatsData", newStatsData);
-      //     setLatestData(newLatestData);
-      //     setPastData(newPastData);
-      //     setStatsData(newStatsData);
-      //   })
-      //   .catch((error) => {
-      //     console.error(error);
-      //   });
+          Object.values(data).forEach((entry) => {
+            if (Object.keys(COUNTRY_RENAME).includes(entry.Country)) {
+              newStatsData[COUNTRY_RENAME[entry.Country]] = {
+                ...keysToCamel(entry),
+                country: COUNTRY_RENAME[entry.Country],
+              };
+            } else {
+              newStatsData[entry.Country] = { ...keysToCamel(entry) };
+            }
+          });
+          countries = countries.concat([...Object.values(COUNTRY_RENAME)]);
+          countries.sort();
+          console.log("newStatsData", newStatsData);
+          setLatestData(newLatestData);
+          setPastData(newPastData);
+          setStatsData(newStatsData);
+          setCountryList(countries);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     }
   }, [countryList.length, latestData, pastData, statsData]);
 
+  if (countryList.length === 0) {
+    return <Loading />;
+  }
+
   return (
     <Router>
-      {countryList.length > 0 ? (
-        <Navigation
-          currentCountry={currentCountry}
-          changeCountry={changeCountry}
-          countryList={countryList}
-        />
-      ) : (
-        <div>LOADING...</div>
-      )}
+      <Navigation
+        currentCountry={currentCountry}
+        changeCountry={changeCountry}
+        countryList={countryList}
+      />
       <Switch>
         <Route
           path="/compare"
           component={
-            countryList.length > 0 && !!statsData
+            !!statsData
               ? () => (
                   <Compare
                     currentCountry={currentCountry}
@@ -190,13 +186,13 @@ const App = () => {
                     countryList={countryList}
                   />
                 )
-              : () => <div>Loading</div>
+              : () => <Loading />
           }
         ></Route>
         <Route
           path="/"
           component={
-            countryList.length > 0 && !!pastData && !!latestData && !!statsData
+            !!pastData && !!latestData && !!statsData
               ? () => (
                   <Home
                     currentCountry={currentCountry}
@@ -205,7 +201,7 @@ const App = () => {
                     statsDataSrc={statsData}
                   />
                 )
-              : () => <div>LOADING</div>
+              : () => <Loading />
           }
         />
       </Switch>
