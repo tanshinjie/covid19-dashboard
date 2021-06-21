@@ -9,7 +9,7 @@ import { Container, FlexSpaceBetween } from "../Styles";
 const { Option } = Select;
 const { Text } = Typography;
 
-const Compare = ({ currentCountry, statsData, countryList }) => {
+const Compare = ({ currentCountry, latestData, countryList }) => {
   const [host, setHost] = useState(null);
   const [guests, setGuests] = useState([]);
   const [tableData, setTableData] = useState([]);
@@ -30,23 +30,24 @@ const Compare = ({ currentCountry, statsData, countryList }) => {
 
   useEffect(() => {
     if (shouldUpdate) {
-      const hostData = statsData[host];
+      const hostData = latestData[host];
       const hostReformatData = _.assign(
         _.pick(hostData, [...columns.map((c) => c.key)])
       );
+
       for (const key in hostReformatData) {
-        if (key !== "country") {
-          hostReformatData[key] = numberWithCommas(
-            parseInt(hostReformatData[key])
-          );
-        }
+        if (key === "location") continue;
+        if (key === "lastUpdatedDate") continue;
+        hostReformatData[key] = numberWithCommas(
+          parseInt(hostReformatData[key])
+        );
       }
 
       const newGuestsReformatData = [];
 
       for (let i = 0; i < guests.length; i++) {
         const country = guests[i];
-        const guestData = statsData[country];
+        const guestData = latestData[country];
 
         const dataReformat = _.assign(
           _.pick(guestData, [...columns.map((c) => c.key)]),
@@ -55,9 +56,9 @@ const Compare = ({ currentCountry, statsData, countryList }) => {
           }
         );
         for (const key in dataReformat) {
-          if (key !== "country") {
-            dataReformat[key] = numberWithCommas(parseInt(dataReformat[key]));
-          }
+          if (key === "location") continue;
+          if (key === "lastUpdatedDate") continue;
+          dataReformat[key] = numberWithCommas(parseInt(dataReformat[key]));
         }
 
         newGuestsReformatData.push(dataReformat);
@@ -66,7 +67,7 @@ const Compare = ({ currentCountry, statsData, countryList }) => {
       setShouldUpdate(false);
       setTableData(newTableData);
     }
-  }, [shouldUpdate, host, guests, statsData]);
+  }, [shouldUpdate, host, guests, latestData]);
 
   const handleChange = (value) => {
     setGuests([...value]);
@@ -102,8 +103,8 @@ const Compare = ({ currentCountry, statsData, countryList }) => {
         columns={columns}
         dataSource={tableData}
         pagination={false}
-        rowClassName={(record) => (record.country === host ? "host-row" : "")}
-        rowKey={(record) => record.country}
+        rowClassName={(record) => (record.location === host ? "host-row" : "")}
+        rowKey={(record) => record.location}
         className={isExporting ? "ant-table-body" : "export"}
         scroll={isExporting ? null : { y: 500 }}
       />

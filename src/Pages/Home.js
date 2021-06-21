@@ -9,10 +9,9 @@ import { Container } from "../Styles";
 
 const LOCAL_STORAGE_KEY = "viewSettings";
 
-const Home = ({ currentCountry, pastDataSrc, latestDataSrc, statsDataSrc }) => {
+const Home = ({ currentCountry, pastDataSrc, latestDataSrc, vaccDataSrc }) => {
   const pastData = pastDataSrc[currentCountry];
   const latestData = latestDataSrc[currentCountry];
-  const statsData = statsDataSrc[currentCountry];
 
   const [viewConfig, setViewConfig] = useState(null);
 
@@ -59,7 +58,7 @@ const Home = ({ currentCountry, pastDataSrc, latestDataSrc, statsDataSrc }) => {
         />
       )}
       {viewConfig && viewConfig.showLatestData && (
-        <LatestData latestCovidData={latestData} statsDataSrc={statsData} />
+        <LatestData latestCovidData={latestData} />
       )}
       {viewConfig && (
         <PastData

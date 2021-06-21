@@ -19,13 +19,6 @@ const Footer = () => {
         >
           Our World In Data&nbsp;
         </Typography.Link>
-        ,
-        <Typography.Link
-          href="https://rapidapi.com/vaccovidlive-vaccovidlive-default/api/vaccovid-coronavirus-vaccine-and-treatment-tracker/"
-          target="_blank"
-        >
-          Vaccovid API
-        </Typography.Link>
       </Typography.Paragraph>
     </Container>
   );

@@ -2,8 +2,7 @@
 
 ## Data sources
 
-1. [Our World In Data](https://github.com/owid/covid-19-data/tree/master/public/data)
-2. [VACCOVID - coronavirus, vaccine and treatment tracker](https://rapidapi.com/vaccovidlive-vaccovidlive-default/api/vaccovid-coronavirus-vaccine-and-treatment-tracker/)
+[Our World In Data](https://github.com/owid/covid-19-data/tree/master/public/data)
 
 ## Features
 

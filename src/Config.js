@@ -1,8 +1,8 @@
 export const columns = [
   {
     title: "Country",
-    dataIndex: "country",
-    key: "country",
+    dataIndex: "location",
+    key: "location",
     width: "7.25%",
   },
   {
@@ -14,60 +14,22 @@ export const columns = [
         parseInt(a.population.replaceAll(",", "")) -
         parseInt(b.population.replaceAll(",", "")),
     },
-    width: "8.25%",
+    width: "6.25%",
   },
   {
-    title: "Total Tests",
-    dataIndex: "totalTests",
-    key: "totalTests",
-    sorter: {
-      compare: (a, b) =>
-        parseInt(a.totalTests.replaceAll(",", "")) -
-        parseInt(b.totalTests.replaceAll(",", "")),
-    },
+    title: "Last Updated Date",
+    dataIndex: "lastUpdatedDate",
+    key: "lastUpdatedDate",
     width: "7.25%",
   },
   {
-    title: "Infection Risk",
-    dataIndex: "infectionRisk",
-    key: "infectionRisk",
+    title: "New Cases",
+    dataIndex: "newCases",
+    key: "newCases",
     sorter: {
       compare: (a, b) =>
-        parseInt(a.infectionRisk.replaceAll(",", "")) -
-        parseInt(b.infectionRisk.replaceAll(",", "")),
-    },
-    width: "5.25%",
-  },
-  {
-    title: "Case Fatality Rate",
-    dataIndex: "caseFatalityRate",
-    key: "caseFatalityRate",
-    sorter: {
-      compare: (a, b) =>
-        parseInt(a.caseFatalityRate.replaceAll(",", "")) -
-        parseInt(b.caseFatalityRate.replaceAll(",", "")),
-    },
-    width: "5.25%",
-  },
-  {
-    title: "Test Percentage",
-    dataIndex: "testPercentage",
-    key: "testPercentage",
-    sorter: {
-      compare: (a, b) =>
-        parseInt(a.testPercentage.replaceAll(",", "")) -
-        parseInt(b.testPercentage.replaceAll(",", "")),
-    },
-    width: "5.25%",
-  },
-  {
-    title: "Recovery Proportion",
-    dataIndex: "recoveryProporation",
-    key: "recoveryProporation",
-    sorter: {
-      compare: (a, b) =>
-        parseInt(a.recoveryProporation.replaceAll(",", "")) -
-        parseInt(b.recoveryProporation.replaceAll(",", "")),
+        parseInt(a.newCases.replaceAll(",", "")) -
+        parseInt(b.newCases.replaceAll(",", "")),
     },
     width: "5.25%",
   },
@@ -80,7 +42,18 @@ export const columns = [
         parseInt(a.totalCases.replaceAll(",", "")) -
         parseInt(b.totalCases.replaceAll(",", "")),
     },
-    width: "7.25%",
+    width: "6.25%",
+  },
+  {
+    title: "New Deaths",
+    dataIndex: "newDeaths",
+    key: "newDeaths",
+    sorter: {
+      compare: (a, b) =>
+        parseInt(a.newDeaths.replaceAll(",", "")) -
+        parseInt(b.newDeaths.replaceAll(",", "")),
+    },
+    width: "5.25%",
   },
   {
     title: "Total Deaths",
@@ -91,71 +64,93 @@ export const columns = [
         parseInt(a.totalDeaths.replaceAll(",", "")) -
         parseInt(b.totalDeaths.replaceAll(",", "")),
     },
-    width: "7.25%",
+    width: "6.25%",
   },
   {
-    title: "Total Recovered",
-    dataIndex: "totalRecovered",
-    key: "totalRecovered",
+    title: "Total Cases per Million",
+    dataIndex: "totalCasesPerMillion",
+    key: "totalCasesPerMillion",
     sorter: {
       compare: (a, b) =>
-        parseInt(a.totalRecovered.replaceAll(",", "")) -
-        parseInt(b.totalRecovered.replaceAll(",", "")),
+        parseInt(a.totalCasesPerMillion.replaceAll(",", "")) -
+        parseInt(b.totalCasesPerMillion.replaceAll(",", "")),
     },
     width: "6.25%",
   },
   {
-    title: "One Case Every X Ppl",
-    dataIndex: "oneCaseeveryXPpl",
-    key: "oneCaseeveryXPpl",
+    title: "Total Deaths per Million",
+    dataIndex: "totalDeathsPerMillion",
+    key: "totalDeathsPerMillion",
     sorter: {
       compare: (a, b) =>
-        parseInt(a.oneCaseeveryXPpl.replaceAll(",", "")) -
-        parseInt(b.oneCaseeveryXPpl.replaceAll(",", "")),
+        parseInt(a.totalDeathsPerMillion.replaceAll(",", "")) -
+        parseInt(b.totalDeathsPerMillion.replaceAll(",", "")),
     },
-    width: "5.25%",
+    width: "6.25%",
   },
   {
-    title: "One Death Every X Ppl",
-    dataIndex: "oneDeatheveryXPpl",
-    key: "oneDeatheveryXPpl",
+    title: "Total Tests",
+    dataIndex: "totalTests",
+    key: "totalTests",
     sorter: {
       compare: (a, b) =>
-        parseInt(a.oneDeatheveryXPpl.replaceAll(",", "")) -
-        parseInt(b.oneDeatheveryXPpl.replaceAll(",", "")),
+        parseInt(a.totalTests.replaceAll(",", "")) -
+        parseInt(b.totalTests.replaceAll(",", "")),
     },
-    width: "5.25%",
+    width: "6.25%",
   },
   {
-    title: "Deaths 1M Pop",
-    dataIndex: "deaths1MPop",
-    key: "deaths1MPop",
+    title: "Total Tests per Thousand",
+    dataIndex: "totalTestsPerThousand",
+    key: "totalTestsPerThousand",
     sorter: {
       compare: (a, b) =>
-        parseInt(a.deaths1MPop.replaceAll(",", "")) -
-        parseInt(b.deaths1MPop.replaceAll(",", "")),
+        parseInt(a.totalTestsPerThousand.replaceAll(",", "")) -
+        parseInt(b.totalTestsPerThousand.replaceAll(",", "")),
     },
-    width: "5.25%",
+    width: "6.25%",
   },
   {
-    title: "Tests 1M Pop",
-    dataIndex: "tests1MPop",
-    key: "tests1MPop",
+    title: "Tests Per Case",
+    dataIndex: "testsPerCase",
+    key: "testsPerCase",
     sorter: {
       compare: (a, b) =>
-        parseInt(a.tests1MPop.replaceAll(",", "")) -
-        parseInt(b.tests1MPop.replaceAll(",", "")),
+        parseInt(a.testsPerCase.replaceAll(",", "")) -
+        parseInt(b.testsPerCase.replaceAll(",", "")),
     },
-    width: "7.25%",
+    width: "6.25%",
   },
   {
-    title: "Total Cases 1M Pop",
-    dataIndex: "totCases1MPop",
-    key: "totCases1MPop",
+    title: "Total Vaccinations",
+    dataIndex: "totalVaccinations",
+    key: "totalVaccinations",
     sorter: {
       compare: (a, b) =>
-        parseInt(a.totCases1MPop.replaceAll(",", "")) -
-        parseInt(b.totCases1MPop.replaceAll(",", "")),
+        parseInt(a.totalVaccinations.replaceAll(",", "")) -
+        parseInt(b.totalVaccinations.replaceAll(",", "")),
+    },
+    width: "6.25%",
+  },
+  {
+    title: "People Vaccinated",
+    dataIndex: "peopleVaccinated",
+    key: "peopleVaccinated",
+    sorter: {
+      compare: (a, b) =>
+        parseInt(a.peopleVaccinated.replaceAll(",", "")) -
+        parseInt(b.peopleVaccinated.replaceAll(",", "")),
+    },
+    width: "6.25%",
+  },
+  {
+    title: "People Fully Vaccinated",
+    dataIndex: "peopleFullyVaccinated",
+    key: "peopleFullyVaccinated",
+    sorter: {
+      compare: (a, b) =>
+        parseInt(a.peopleFullyVaccinated.replaceAll(",", "")) -
+        parseInt(b.peopleFullyVaccinated.replaceAll(",", "")),
     },
     width: "6.25%",
   },
